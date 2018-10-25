@@ -48,7 +48,44 @@
             <div class='date'>2018-10-25</div>
             《机器学习》(西瓜书)笔记(3)-线性模型
           </h1>
-          
+          <h2 id="3-1基本形式"><a href="#3-1基本形式" class="headerlink" title="3.1基本形式"></a>3.1基本形式</h2><p><img src="https://i.imgur.com/9n0OCYs.png" alt=""></p>
+<h2 id="3-2线性回归"><a href="#3-2线性回归" class="headerlink" title="3.2线性回归"></a>3.2线性回归</h2><p>离散属性:</p>
+<p>若属性间存在“序”关系，可通过连续化将其转化为连续值，例如二值属性身高的取值“高”“矮”可转化为{1.0,0.0}，三值属性“高度”的取值“高”“中”“低”可转化为{1.0,0.5,0.0}；</p>
+<p>若属性间不存在序关系，假定有k个属性值，则通常转化为k维向量，例如属性“瓜类”的取值“西瓜”“南瓜”“黄瓜”可转化为(0,0,1),(0,1,0),(1,0,0)</p>
+<p>线性回归，试图学得：</p>
+<p><img src="https://i.imgur.com/QKrjegX.png" alt=""></p>
+<p>均方误差有非常好的几何意义，它对应了常用的欧几里得距离或简称“欧式距离”。基于均方误差最小化来进行模型求解的方法称为<strong>最小二乘法</strong>。在线性回归中，最小二乘法就是试图找到一条直线，使所有样本到直线上的欧式距离之和最小。</p>
+<p><img src="https://i.imgur.com/BGLEPki.png" alt=""></p>
+<p><strong>对数线性回归</strong></p>
+<p><img src="https://i.imgur.com/2iggLPS.png" alt=""></p>
+<p>更一般地，考虑单调可微函数g(.)[连续且充分光滑]，令</p>
+<p><img src="https://i.imgur.com/W6c4mdb.png" alt=""></p>
+<p>这样得到的模型称为“广义线性模型”，其中函数g(.)称为联系函数。显然，对数线性回归是广义线性模型在g(.)=ln(.)时的特例。</p>
+<h2 id="3-3对数几率回归"><a href="#3-3对数几率回归" class="headerlink" title="3.3对数几率回归"></a>3.3对数几率回归</h2><p><img src="https://i.imgur.com/v2JBAVS.png" alt=""></p>
+<p>对数几率函数是一种“Sigmoid函数”，它将z值转化为一个接近0或1的y值，并且其输出值在z=0附近变化很陡，将对数几率函数作为g¯(.)带入y=g¯¹(WTx+b)，得</p>
+<p><img src="https://i.imgur.com/mP5eXlm.png" alt=""></p>
+<p>由此可以看出，式3.18实际上实在用线性回归模型的预测结果去逼近真实标记的对数几率，因此，其对应的模型称为“对数几率回归”。</p>
+<p>特别需注意到，虽然它的名字是回归，但实际却是一种<strong>分类学习方法</strong>。这种方法有很多优点：</p>
+<ul>
+<li>它直接对分类可能性进行建模，无需事先假设数据分布，避免了假设分布不准确所带来的问题。</li>
+<li>它不仅预测出类别，还得到近似概率预测，对许多需利用概率辅助决策的任务很有用。</li>
+<li>对率函数是任意阶可导的凸函数，有很好的数学性质，现有的许多数值优化算法都可直接用于求取最优解。</li>
+</ul>
+<h2 id="3-4线性判别分析-LDA"><a href="#3-4线性判别分析-LDA" class="headerlink" title="3.4线性判别分析(LDA)"></a>3.4线性判别分析(LDA)</h2><p><img src="https://i.imgur.com/8IR1xvg.png" alt=""></p>
+<h2 id="3-5多分类学习"><a href="#3-5多分类学习" class="headerlink" title="3.5多分类学习"></a>3.5多分类学习</h2><p>现实中常遇到多分类学习任务，有些二分类学习方法可以直接推广到多分类，但在更多的情形下，我们是基于一些基本策略，利用二分类学习器来解决多分类问题。</p>
+<p>最经典的拆分策略有三种：一对一（One vs. One，简称OvO），一对其余（One vs. Rest，简称OvR）和多对多（Many vs. Many，简称MvM）。</p>
+<p><img src="https://i.imgur.com/ySXG8mY.png" alt=""></p>
+<p>MvM是每次将若干个类作为正类，若干个其他类作为反类。MvM的正、反类构造必须有特殊的设计，不能随意选取。最常见的MvM技术为纠错输出码（Error Correcting Output Codes, 简称ECOC）。</p>
+<p><img src="https://i.imgur.com/Q3tqMwo.png" alt=""></p>
+<p><img src="https://i.imgur.com/IX3m78i.png" alt=""></p>
+<p>纠错：在测试阶段，ECOC编码对分类的错误有一定的容忍和修正能力。</p>
+<ul>
+<li>一般来说，对同一个学习任务，ECOC编码越长，纠错能力越强。然而编码越长，意味着所需训练的分类器越多，计算，存储开销都会增大；另一方面，对有限类别数，可能的组合数目是有限的，码长超过一定范围后就失去了意义。</li>
+<li>对同等长度的编码，理论上来说，任意两个类别之间的编码距离越远，则纠错能力越强。</li>
+</ul>
+<h2 id="3-6类别不平衡问题"><a href="#3-6类别不平衡问题" class="headerlink" title="3.6类别不平衡问题"></a>3.6类别不平衡问题</h2><p>类别不平衡就是指分类任务中不同类别的的训练样例数目差别很大的情况。</p>
+<p><img src="https://i.imgur.com/La4o1E8.png" alt=""></p>
+
           <br>
 <p>Y&#39;s Blog</p>
 <p><img src='/images/scribble3.png' alt='scribble'></p>
