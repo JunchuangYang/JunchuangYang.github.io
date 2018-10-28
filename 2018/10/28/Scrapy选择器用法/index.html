@@ -1,0 +1,123 @@
+<html>
+  <head>
+    <title>Scrapy选择器用法 - Y&#39;s Blog</title>
+    <link href='/images/fav.png' rel='shortcut icon'>
+<link href='/atom.xml' rel='alternate' type='application/rss+xml'>
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/highlight.css">
+<link rel="stylesheet" href="/css/responsive.css">
+<script src="/js/jquery.js"></script>
+<script src="/js/basics.js"></script>
+<meta content='width=device-width, initial-scale=1.0, user-scalable=no' name='viewport'>
+<meta content='text/html; charset=utf-8' http-equiv='content-type'>
+
+
+  </head>
+  <body>
+    <header>
+  <a id='go-back-home' href='/'><img src='/images/scribble.png' alt='Home' width='53' height='59'></a>
+  <p>Y&#39;s Blog</p>
+  <p>Salted fish without dreams</p>
+</header>
+
+    <div id='container'>
+      <div class='block'>
+  
+    <a class='main' href='/'>Home</a>
+  
+    <a class='main' href='/about'>About</a>
+  
+    <a class='main' href='https://github.com/JunchuangYang'>Github</a>
+  
+</div>
+
+      <section class='paging'>
+  
+    <div class='left'>
+      <a href='/2018/10/28/Scrapy命令行详解/'>
+        ‹
+      </a>
+    </div>
+  
+  
+    <div class='right'>
+      <a href='/2018/10/25/机器学习第三章/'>
+        ›
+      </a>
+    </div>
+  
+</section>
+
+      <div class='content'>
+        <section class='post'>
+          <h1>
+            <div class='date'>2018-10-28</div>
+            Scrapy选择器用法
+          </h1>
+          <p>原文地址：<a href="https://www.cnblogs.com/zhaof/p/7189860.html" target="_blank" rel="noopener">https://www.cnblogs.com/zhaof/p/7189860.html</a></p>
+<p>Scrapy提取数据有自己的一套机制，被称作选择器（selectors）,通过特定的Xpath或者CSS表达式来选择HTML文件的某个部分</p>
+<p>Xpath是专门在XML文件中选择节点的语言，也可以用在HTML上。</p>
+<p>CSS是一门将HTML文档样式化语言，选择器由它定义，并与特定的HTML元素的样式相关联。</p>
+<p><strong>XPath</strong>选择器</p>
+<p>常用的路径表达式，这里列举了一些常用的，XPath的功能非常强大，内含超过100个的内建函数。</p>
+<p>下面为常用的方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">nodeName    选取此节点的所有节点</span><br><span class="line">/           从根节点选取</span><br><span class="line">//          从匹配选择的当前节点选择文档中的节点，不考虑它们的位置</span><br><span class="line">.           选择当前节点</span><br><span class="line">..          选取当前节点的父节点</span><br><span class="line"><span class="meta">@           选取属性</span></span><br><span class="line">*           匹配任何元素节点</span><br><span class="line"><span class="meta">@*          匹配任何属性节点</span></span><br><span class="line">Node()      匹配任何类型的节点</span><br></pre></td></tr></table></figure>
+<p><strong>CSS</strong>选择器</p>
+<p>CSS层叠样式表，语法由两个主要部分组成：选择器，一条或多条声明</p>
+<p>Selector {declaration1;declaration2;……}</p>
+<p>下面为常用的使用方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">.class              .color              选择class=”color”的所有元素</span><br><span class="line"><span class="comment">#id                 #info               选择id=”info”的所有元素</span></span><br><span class="line">*                   *                   选择所有元素</span><br><span class="line">element             p                   选择所有的p元素</span><br><span class="line">element,element     div,p               选择所有div元素和所有p元素</span><br><span class="line">element element     div p               选择div标签内部的所有p元素</span><br><span class="line">[attribute]         [target]            选择带有targe属性的所有元素</span><br><span class="line">[arrtibute=value]   [target=_blank]     选择target=”_blank”的所有元素</span><br></pre></td></tr></table></figure>
+<p>上面我们列举了两种选择器的常用方法，下面通过scrapy帮助文档提供的一个地址来做演示</p>
+<p>地址：<a href="http://doc.scrapy.org/en/latest/_static/selectors-sample1.html" target="_blank" rel="noopener">http://doc.scrapy.org/en/latest/_static/selectors-sample1.html</a></p>
+<p>这个地址的网页源码为：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">base</span> <span class="attr">href</span>=<span class="string">'http://example.com/'</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>Example website<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">'images'</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">'image1.html'</span>&gt;</span>Name: My image 1 <span class="tag">&lt;<span class="name">br</span> /&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">'image1_thumb.jpg'</span> /&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">'image2.html'</span>&gt;</span>Name: My image 2 <span class="tag">&lt;<span class="name">br</span> /&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">'image2_thumb.jpg'</span> /&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">'image3.html'</span>&gt;</span>Name: My image 3 <span class="tag">&lt;<span class="name">br</span> /&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">'image3_thumb.jpg'</span> /&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">'image4.html'</span>&gt;</span>Name: My image 4 <span class="tag">&lt;<span class="name">br</span> /&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">'image4_thumb.jpg'</span> /&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">'image5.html'</span>&gt;</span>Name: My image 5 <span class="tag">&lt;<span class="name">br</span> /&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">'image5_thumb.jpg'</span> /&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>我们通过scrapy shell <a href="http://doc.scrapy.org/en/latest/_static/selectors-sample1.html" target="_blank" rel="noopener">http://doc.scrapy.org/en/latest/_static/selectors-sample1.html</a>,<br>来演示两种选择器的功能</p>
+<p>这里的extract_first()就可以获取title标签的文本内容,因为我们第一个通过xpath返回的结果是一个列表，所以我们通过extract()之后返回的也是一个列表，而extract_first()可以直接返回第一个值，extract_first()有一个参数default,例如：extract_first(default=””)表示如果匹配不到返回一个空</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">1</span>]: response.xpath(<span class="string">'//title/text()'</span>)</span><br><span class="line">Out[<span class="number">1</span>]: [&lt;Selector xpath=<span class="string">'//title/text()'</span> data=<span class="string">'Example website'</span>&gt;]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">In [<span class="number">3</span>]: response.xpath(<span class="string">'//title/text()'</span>).extract_first()</span><br><span class="line">Out[<span class="number">3</span>]: <span class="string">'Example website'</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">4</span>]: response.xpath(<span class="string">'//title/text()'</span>).extract()</span><br><span class="line">Out[<span class="number">4</span>]: [<span class="string">'Example website'</span>]</span><br></pre></td></tr></table></figure>
+<p>XSS选择器获取：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">5</span>]: response.css(<span class="string">'title::text'</span>)</span><br><span class="line">Out[<span class="number">5</span>]: [&lt;Selector xpath=<span class="string">'descendant-or-self::title/text()'</span> data=<span class="string">'Example website'</span>&gt;]</span><br><span class="line"></span><br><span class="line">In [<span class="number">6</span>]: response.css(<span class="string">'title::text'</span>).extract_first()</span><br><span class="line">Out[<span class="number">6</span>]: <span class="string">'Example website'</span></span><br></pre></td></tr></table></figure>
+<p>查找图片信息</p>
+<p>这里通过xpath和css结合使用获取图片的src地址：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">In [<span class="number">7</span>]: response.xpath(<span class="string">'//div[@id="images"]'</span>).css(<span class="string">'img'</span>)</span><br><span class="line">Out[<span class="number">7</span>]:</span><br><span class="line">[&lt;Selector xpath=<span class="string">'descendant-or-self::img'</span> data=<span class="string">'&lt;img src="image1_thumb.jpg"&gt;'</span>&gt;,</span><br><span class="line"> &lt;Selector xpath=<span class="string">'descendant-or-self::img'</span> data=<span class="string">'&lt;img src="image2_thumb.jpg"&gt;'</span>&gt;,</span><br><span class="line"> &lt;Selector xpath=<span class="string">'descendant-or-self::img'</span> data=<span class="string">'&lt;img src="image3_thumb.jpg"&gt;'</span>&gt;,</span><br><span class="line"> &lt;Selector xpath=<span class="string">'descendant-or-self::img'</span> data=<span class="string">'&lt;img src="image4_thumb.jpg"&gt;'</span>&gt;,</span><br><span class="line"> &lt;Selector xpath=<span class="string">'descendant-or-self::img'</span> data=<span class="string">'&lt;img src="image5_thumb.jpg"&gt;'</span>&gt;]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">In [<span class="number">9</span>]: response.xpath(<span class="string">'//div[@id="images"]'</span>).css(<span class="string">'img::attr(src)'</span>).extract()</span><br><span class="line">Out[<span class="number">9</span>]:</span><br><span class="line">[<span class="string">'image1_thumb.jpg'</span>,</span><br><span class="line"> <span class="string">'image2_thumb.jpg'</span>,</span><br><span class="line"> <span class="string">'image3_thumb.jpg'</span>,</span><br><span class="line"> <span class="string">'image4_thumb.jpg'</span>,</span><br><span class="line"> <span class="string">'image5_thumb.jpg'</span>]</span><br></pre></td></tr></table></figure>
+<p>查找a标签信息</p>
+<p>这里分别通过xapth和css选择器获取a标签的href内容，以及文本信息，css获取属性信息是通过attr,xpath是通过@属性名</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">10</span>]: response.xpath(<span class="string">'//a/@href'</span>)</span><br><span class="line">Out[<span class="number">10</span>]:</span><br><span class="line">[&lt;Selector xpath=<span class="string">'//a/@href'</span> data=<span class="string">'image1.html'</span>&gt;,</span><br><span class="line"> &lt;Selector xpath=<span class="string">'//a/@href'</span> data=<span class="string">'image2.html'</span>&gt;,</span><br><span class="line"> &lt;Selector xpath=<span class="string">'//a/@href'</span> data=<span class="string">'image3.html'</span>&gt;,</span><br><span class="line"> &lt;Selector xpath=<span class="string">'//a/@href'</span> data=<span class="string">'image4.html'</span>&gt;,</span><br><span class="line"> &lt;Selector xpath=<span class="string">'//a/@href'</span> data=<span class="string">'image5.html'</span>&gt;]</span><br><span class="line"></span><br><span class="line">In [<span class="number">11</span>]: response.xpath(<span class="string">'//a/@href'</span>).extract()</span><br><span class="line">Out[<span class="number">11</span>]: [<span class="string">'image1.html'</span>, <span class="string">'image2.html'</span>, <span class="string">'image3.html'</span>, <span class="string">'image4.html'</span>, <span class="string">'image5.html'</span>]</span><br><span class="line"></span><br><span class="line">In [<span class="number">14</span>]: response.xpath(<span class="string">'//a/text()'</span>).extract()</span><br><span class="line">Out[<span class="number">14</span>]:</span><br><span class="line">[<span class="string">'Name: My image 1 '</span>,</span><br><span class="line"> <span class="string">'Name: My image 2 '</span>,</span><br><span class="line"> <span class="string">'Name: My image 3 '</span>,</span><br><span class="line"> <span class="string">'Name: My image 4 '</span>,</span><br><span class="line"> <span class="string">'Name: My image 5 '</span>]</span><br><span class="line"></span><br><span class="line">In [<span class="number">15</span>]: response.css(<span class="string">'a::attr(href)'</span>)</span><br><span class="line">Out[<span class="number">15</span>]:</span><br><span class="line">[&lt;Selector xpath=<span class="string">'descendant-or-self::a/@href'</span> data=<span class="string">'image1.html'</span>&gt;,</span><br><span class="line"> &lt;Selector xpath=<span class="string">'descendant-or-self::a/@href'</span> data=<span class="string">'image2.html'</span>&gt;,</span><br><span class="line"> &lt;Selector xpath=<span class="string">'descendant-or-self::a/@href'</span> data=<span class="string">'image3.html'</span>&gt;,</span><br><span class="line"> &lt;Selector xpath=<span class="string">'descendant-or-self::a/@href'</span> data=<span class="string">'image4.html'</span>&gt;,</span><br><span class="line"> &lt;Selector xpath=<span class="string">'descendant-or-self::a/@href'</span> data=<span class="string">'image5.html'</span>&gt;]</span><br><span class="line"></span><br><span class="line">In [<span class="number">16</span>]: response.css(<span class="string">'a::attr(href)'</span>).extract()</span><br><span class="line">Out[<span class="number">16</span>]: [<span class="string">'image1.html'</span>, <span class="string">'image2.html'</span>, <span class="string">'image3.html'</span>, <span class="string">'image4.html'</span>, <span class="string">'image5.html'</span>]</span><br><span class="line"></span><br><span class="line">In [<span class="number">17</span>]: response.css(<span class="string">'a::text'</span>).extract()</span><br><span class="line">Out[<span class="number">17</span>]:</span><br><span class="line">[<span class="string">'Name: My image 1 '</span>,</span><br><span class="line"> <span class="string">'Name: My image 2 '</span>,</span><br><span class="line"> <span class="string">'Name: My image 3 '</span>,</span><br><span class="line"> <span class="string">'Name: My image 4 '</span>,</span><br><span class="line"> <span class="string">'Name: My image 5 '</span>]</span><br></pre></td></tr></table></figure>
+<p>高级用法</p>
+<p>查找属性名称包含img的所有的超链接，通过contains实现</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">18</span>]: response.xpath(<span class="string">'//a[contains(@href,"image")]/@href'</span>).extract()</span><br><span class="line">Out[<span class="number">18</span>]: [<span class="string">'image1.html'</span>, <span class="string">'image2.html'</span>, <span class="string">'image3.html'</span>, <span class="string">'image4.html'</span>, <span class="string">'image5.html'</span>]</span><br><span class="line"></span><br><span class="line">In [<span class="number">19</span>]: response.css(<span class="string">'a[href*=image]::attr(href)'</span>).extract()</span><br><span class="line">Out[<span class="number">19</span>]: [<span class="string">'image1.html'</span>, <span class="string">'image2.html'</span>, <span class="string">'image3.html'</span>, <span class="string">'image4.html'</span>, <span class="string">'image5.html'</span>]</span><br></pre></td></tr></table></figure>
+<p>查找img的src属性</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">20</span>]: response.xpath(<span class="string">'//a[contains(@href,"image")]/img/@src'</span>).extract()</span><br><span class="line">Out[<span class="number">20</span>]:</span><br><span class="line">[<span class="string">'image1_thumb.jpg'</span>,</span><br><span class="line"> <span class="string">'image2_thumb.jpg'</span>,</span><br><span class="line"> <span class="string">'image3_thumb.jpg'</span>,</span><br><span class="line"> <span class="string">'image4_thumb.jpg'</span>,</span><br><span class="line"> <span class="string">'image5_thumb.jpg'</span>]</span><br><span class="line"></span><br><span class="line">In [<span class="number">22</span>]: response.css(<span class="string">'a[href*=image] img::attr(src)'</span>).extract()</span><br><span class="line">Out[<span class="number">22</span>]:</span><br><span class="line">[<span class="string">'image1_thumb.jpg'</span>,</span><br><span class="line"> <span class="string">'image2_thumb.jpg'</span>,</span><br><span class="line"> <span class="string">'image3_thumb.jpg'</span>,</span><br><span class="line"> <span class="string">'image4_thumb.jpg'</span>,</span><br><span class="line"> <span class="string">'image5_thumb.jpg'</span>]</span><br></pre></td></tr></table></figure>
+<p>提取a标签的文本中name后面的内容，这里提供了正则的方法re和re_first</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">In [<span class="number">23</span>]: response.css(<span class="string">'a::text'</span>).re(<span class="string">'Name\:(.*)'</span>)</span><br><span class="line">Out[<span class="number">23</span>]:</span><br><span class="line">[<span class="string">' My image 1 '</span>,</span><br><span class="line"> <span class="string">' My image 2 '</span>,</span><br><span class="line"> <span class="string">' My image 3 '</span>,</span><br><span class="line"> <span class="string">' My image 4 '</span>,</span><br><span class="line"> <span class="string">' My image 5 '</span>]</span><br><span class="line"></span><br><span class="line">In [<span class="number">24</span>]: response.css(<span class="string">'a::text'</span>).re_first(<span class="string">'Name\:(.*)'</span>)</span><br><span class="line">Out[<span class="number">24</span>]: <span class="string">' My image 1 '</span></span><br></pre></td></tr></table></figure>
+          <br>
+<p>Y&#39;s Blog</p>
+<p><img src='/images/scribble3.png' alt='scribble'></p>
+
+        </section>
+      </div>
+      
+      <div class='block'>
+  
+    <a class='main' href='/'>Home</a>
+  
+    <a class='main' href='/about'>About</a>
+  
+    <a class='main' href='https://github.com/JunchuangYang'>Github</a>
+  
+</div>
+
+    </div>
+    <footer>
+  <span class='muted'>&copy; Junchuang Yang. All Rights Reserved.</span><br>
+  <a href='https://github.com/saintwinkle/hexo-theme-scribble' class='muted'>built with Hexo using Scribble theme</a>
+  <br>
+   <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <span id="busuanzi_container_site_pv">
+    本站访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  <br>
+  <img src='/images/scribble2.png' alt='scribble' />
+</footer>
+
+  </body>
+</html>
