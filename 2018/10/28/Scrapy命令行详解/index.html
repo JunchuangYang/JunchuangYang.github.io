@@ -1,0 +1,132 @@
+<html>
+  <head>
+    <title>Scrapy命令行详解 - Y&#39;s Blog</title>
+    <link href='/images/fav.png' rel='shortcut icon'>
+<link href='/atom.xml' rel='alternate' type='application/rss+xml'>
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/highlight.css">
+<link rel="stylesheet" href="/css/responsive.css">
+<script src="/js/jquery.js"></script>
+<script src="/js/basics.js"></script>
+<meta content='width=device-width, initial-scale=1.0, user-scalable=no' name='viewport'>
+<meta content='text/html; charset=utf-8' http-equiv='content-type'>
+
+
+  </head>
+  <body>
+    <header>
+  <a id='go-back-home' href='/'><img src='/images/scribble.png' alt='Home' width='53' height='59'></a>
+  <p>Y&#39;s Blog</p>
+  <p>Salted fish without dreams</p>
+</header>
+
+    <div id='container'>
+      <div class='block'>
+  
+    <a class='main' href='/'>Home</a>
+  
+    <a class='main' href='/about'>About</a>
+  
+    <a class='main' href='https://github.com/JunchuangYang'>Github</a>
+  
+</div>
+
+      <section class='paging'>
+  
+  
+    <div class='right'>
+      <a href='/2018/10/25/机器学习第三章/'>
+        ›
+      </a>
+    </div>
+  
+</section>
+
+      <div class='content'>
+        <section class='post'>
+          <h1>
+            <div class='date'>2018-10-28</div>
+            Scrapy命令行详解
+          </h1>
+          <p>原文地址：<a href="https://www.cnblogs.com/zhaof/p/7183220.html" target="_blank" rel="noopener">https://www.cnblogs.com/zhaof/p/7183220.html</a></p>
+<p>这篇文章主要是对的scrapy命令行使用的一个介绍</p>
+<h3 id="创建爬虫项目"><a href="#创建爬虫项目" class="headerlink" title="创建爬虫项目"></a>创建爬虫项目</h3><p>scrapy startproject 项目名</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\lenovo&gt;scrapy startproject test1</span><br><span class="line">New Scrapy project &apos;test1&apos;, using template directory &apos;C:\\Users\\lenovo\\Anaconda3\\lib\\site-packages\\scrapy\\templates\\project&apos;, created in:</span><br><span class="line">    C:\Users\lenovo\test1</span><br><span class="line"></span><br><span class="line">You can start your first spider with:</span><br><span class="line">    cd test1</span><br><span class="line">    scrapy genspider example example.com</span><br></pre></td></tr></table></figure>
+<p>这个时候爬虫的目录结构就已经创建完成了,目录结构如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">│  scrapy.cfg</span><br><span class="line">│</span><br><span class="line">└─test1</span><br><span class="line">    │  items.py</span><br><span class="line">    │  middlewares.py</span><br><span class="line">    │  pipelines.py</span><br><span class="line">    │  settings.py</span><br><span class="line">    │  __init__.py</span><br><span class="line">    │</span><br><span class="line">    ├─spiders</span><br><span class="line">    │  │  __init__.py</span><br><span class="line">    │  │</span><br><span class="line">    │  └─__pycache__</span><br><span class="line">    └─__pycache__</span><br></pre></td></tr></table></figure></p>
+<p>接着我们按照提示可以生成一个spider,这里以百度作为例子,生成spider的命令格式为;</p>
+<p>scrapy genspider 爬虫名字 爬虫的网址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\lenovo\test1&gt;scrapy genspider baiduSpider baidu.com</span><br><span class="line">Created spider &apos;baiduSpider&apos; using template &apos;basic&apos; in module:</span><br><span class="line">  test1.spiders.baiduSpider</span><br></pre></td></tr></table></figure>
+<h3 id="关于命令详细使用"><a href="#关于命令详细使用" class="headerlink" title="关于命令详细使用"></a>关于命令详细使用</h3><p>这里的命令分为全局的命令和项目的命令，全局的命令表示可以在任何地方使用，而项目的命令只能在项目目录下使用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">全局的命令有：  </span><br><span class="line">startproject  </span><br><span class="line">genspider  </span><br><span class="line">settings  </span><br><span class="line">runspider  </span><br><span class="line">shell  </span><br><span class="line">fetch</span><br><span class="line">view</span><br><span class="line">version</span><br><span class="line"></span><br><span class="line">项目命令有：</span><br><span class="line">crawl</span><br><span class="line">check</span><br><span class="line">list</span><br><span class="line">edit</span><br><span class="line">parse</span><br><span class="line">bench</span><br></pre></td></tr></table></figure></p>
+<p>genspider</p>
+<p>用于生成爬虫，这里scrapy提供给我们不同的几种模板生成spider,默认用的是basic,我们可以通过命令查看所有的模板</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\lenovo\test1&gt;scrapy genspider -l</span><br><span class="line">Available templates:</span><br><span class="line">  basic</span><br><span class="line">  crawl</span><br><span class="line">  csvfeed</span><br><span class="line">  xmlfeed</span><br></pre></td></tr></table></figure>
+<p>当我们创建的时候可以指定模板，不指定默认用的basic,如果想要指定模板则通过</p>
+<p>scrapy genspider -t 模板名字</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\lenovo\test1&gt;scrapy genspider -t crawl zhihuspider zhihu.com</span><br><span class="line">Created spider &apos;zhihuspider&apos; using template &apos;crawl&apos; in module:</span><br><span class="line">  test1.spiders.zhihuspider</span><br></pre></td></tr></table></figure>
+<p>crawl</p>
+<p>这个是用去启动spider爬虫格式为：</p>
+<p>scrapy crawl 爬虫名字</p>
+<p>这里需要注意这里的爬虫名字和通过scrapy genspider 生成爬虫的名字是一致的</p>
+<p>check</p>
+<p>用于检查代码是否有错误，scrapy check</p>
+<p>list</p>
+<p>scrapy list列出所有可用的爬虫</p>
+<p>fetch</p>
+<p>scrapy fetch url地址 </p>
+<p>该命令会通过scrapy downloader 讲网页的源代码下载下来并显示出来</p>
+<p>这里有一些参数：</p>
+<p>–nolog 不打印日志</p>
+<p>–headers 打印响应头信息</p>
+<p>–no-redirect 不做跳转</p>
+<p>view</p>
+<p>scrapy view url地址</p>
+<p>该命令会讲网页document内容下载下来，并且在浏览器显示出来</p>
+<p>shell</p>
+<p>这是一个命令行交互模式</p>
+<p>通过scrapy shell url地址进入交互模式</p>
+<p>这里我么可以通过css选择器以及xpath选择器获取我们想要的内容，例如我们通过<br>scrapy shell <a href="http://ipython.org/pyreadline.html" target="_blank" rel="noopener">http://ipython.org/pyreadline.html</a></p>
+<p><img src="https://i.imgur.com/ya7NusI.png" alt=""></p>
+<p>这里最后给我们返回一个response,这里的response就和我们通requests请求网页获取的数据是相同的。<br>view(response)会直接在浏览器显示结果</p>
+<p>response.text 获取网页的文本</p>
+<p> settings</p>
+<p>获取当前的配置信息</p>
+<p>通过scrapy settings -h可以获取这个命令的所有帮助信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\lenovo\test1&gt;scrapy settings -h</span><br><span class="line">Usage</span><br><span class="line">=====</span><br><span class="line">  scrapy settings [options]</span><br><span class="line"></span><br><span class="line">Get settings values</span><br><span class="line"></span><br><span class="line">Options</span><br><span class="line">=======</span><br><span class="line">--help, -h              show this help message and exit</span><br><span class="line">--get=SETTING           print raw setting value</span><br><span class="line">--getbool=SETTING       print setting value, interpreted as a boolean</span><br><span class="line">--getint=SETTING        print setting value, interpreted as an integer</span><br><span class="line">--getfloat=SETTING      print setting value, interpreted as a float</span><br><span class="line">--getlist=SETTING       print setting value, interpreted as a list</span><br><span class="line"></span><br><span class="line">Global Options</span><br><span class="line">--------------</span><br><span class="line">--logfile=FILE          log file. if omitted stderr will be used</span><br><span class="line">--loglevel=LEVEL, -L LEVEL</span><br><span class="line">                        log level (default: DEBUG)</span><br><span class="line">--nolog                 disable logging completely</span><br><span class="line">--profile=FILE          write python cProfile stats to FILE</span><br><span class="line">--pidfile=FILE          write process ID to FILE</span><br><span class="line">--set=NAME=VALUE, -s NAME=VALUE</span><br><span class="line">                        set/override setting (may be repeated)</span><br><span class="line">--pdb                   enable pdb on failure</span><br></pre></td></tr></table></figure>
+<p>runspider</p>
+<p>这个和通过crawl启动爬虫不同，这里是scrapy runspider 爬虫文件名称</p>
+<p>所有的爬虫文件都是在项目目录下的spiders文件夹中</p>
+<p>version</p>
+<p>查看版本信息，并查看依赖库的信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\lenovo\test1&gt;scrapy version -v</span><br><span class="line">Scrapy       : 1.5.1</span><br><span class="line">lxml         : 4.2.1.0</span><br><span class="line">libxml2      : 2.9.8</span><br><span class="line">cssselect    : 1.0.3</span><br><span class="line">parsel       : 1.5.0</span><br><span class="line">w3lib        : 1.19.0</span><br><span class="line">Twisted      : 18.7.0</span><br><span class="line">Python       : 3.6.5 |Anaconda, Inc.| (default, Mar 29 2018, 13:32:41) [MSC v.19</span><br><span class="line">00 64 bit (AMD64)]</span><br><span class="line">pyOpenSSL    : 18.0.0 (OpenSSL 1.1.0i  14 Aug 2018)</span><br><span class="line">cryptography : 2.3.1</span><br><span class="line">Platform     : Windows-10-10.0.10586-SP0</span><br></pre></td></tr></table></figure>
+          <br>
+<p>Y&#39;s Blog</p>
+<p><img src='/images/scribble3.png' alt='scribble'></p>
+
+        </section>
+      </div>
+      
+      <div class='block'>
+  
+    <a class='main' href='/'>Home</a>
+  
+    <a class='main' href='/about'>About</a>
+  
+    <a class='main' href='https://github.com/JunchuangYang'>Github</a>
+  
+</div>
+
+    </div>
+    <footer>
+  <span class='muted'>&copy; Junchuang Yang. All Rights Reserved.</span><br>
+  <a href='https://github.com/saintwinkle/hexo-theme-scribble' class='muted'>built with Hexo using Scribble theme</a>
+  <br>
+   <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <span id="busuanzi_container_site_pv">
+    本站访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  <br>
+  <img src='/images/scribble2.png' alt='scribble' />
+</footer>
+
+  </body>
+</html>
