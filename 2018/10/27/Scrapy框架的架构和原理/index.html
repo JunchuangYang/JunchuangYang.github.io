@@ -1,0 +1,121 @@
+<html>
+  <head>
+    <title>Scrapy框架的架构和原理 - Y&#39;s Blog</title>
+    <link href='/images/fav.png' rel='shortcut icon'>
+<link href='/atom.xml' rel='alternate' type='application/rss+xml'>
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/highlight.css">
+<link rel="stylesheet" href="/css/responsive.css">
+<script src="/js/jquery.js"></script>
+<script src="/js/basics.js"></script>
+<meta content='width=device-width, initial-scale=1.0, user-scalable=no' name='viewport'>
+<meta content='text/html; charset=utf-8' http-equiv='content-type'>
+
+
+  </head>
+  <body>
+    <header>
+  <a id='go-back-home' href='/'><img src='/images/scribble.png' alt='Home' width='53' height='59'></a>
+  <p>Y&#39;s Blog</p>
+  <p>Salted fish without dreams</p>
+</header>
+
+    <div id='container'>
+      <div class='block'>
+  
+    <a class='main' href='/'>Home</a>
+  
+    <a class='main' href='/about'>About</a>
+  
+    <a class='main' href='https://github.com/JunchuangYang'>Github</a>
+  
+</div>
+
+      <section class='paging'>
+  
+    <div class='left'>
+      <a href='/2018/10/28/Scrapy选择器用法/'>
+        ‹
+      </a>
+    </div>
+  
+  
+    <div class='right'>
+      <a href='/2018/10/25/机器学习第三章/'>
+        ›
+      </a>
+    </div>
+  
+</section>
+
+      <div class='content'>
+        <section class='post'>
+          <h1>
+            <div class='date'>2018-10-27</div>
+            Scrapy框架的架构和原理
+          </h1>
+          <p>原文地址：<a href="https://www.cnblogs.com/zhaof/p/7173397.html" target="_blank" rel="noopener">https://www.cnblogs.com/zhaof/p/7173397.html</a></p>
+<p>这一篇文章主要是为了对scrapy框架的工作流程以及各个组件功能的介绍</p>
+<p>Scrapy目前已经可以很好的在python3上运行</p>
+<p>Scrapy使用了<strong>Twisted</strong>作为框架，Twisted有些特殊的地方是它是事件驱动的，并且比较适合<strong>异步的代码</strong>。对于会阻塞线程的操作包含访问文件、数据库或者Web、产生新的进程并需要处理新进程的输出(如运行shell命令)、执行系统层次操作的代码(如等待系统队列),Twisted提供了允许执行上面的操作但不会阻塞代码执行的方法。</p>
+<h3 id="Scrapy-data-flow（流程图）"><a href="#Scrapy-data-flow（流程图）" class="headerlink" title="Scrapy data flow（流程图）"></a>Scrapy data flow（流程图）</h3><p><img src="https://i.imgur.com/rVFbLIW.png" alt=""></p>
+<p><strong>Scrapy数据流是由执行的核心引擎(engine)控</strong>制，流程是这样的：</p>
+<ul>
+<li>1、爬虫引擎ENGINE获得初始请求开始抓取。 </li>
+<li>2、爬虫引擎ENGINE开始请求调度程序SCHEDULER，并准备对下一次的请求进行抓取。 </li>
+<li>3、爬虫调度器返回下一个请求给爬虫引擎。 </li>
+<li>4、引擎请求发送到下载器DOWNLOADER，通过下载中间件下载网络数据。 </li>
+<li>5、一旦下载器完成页面下载，将下载结果返回给爬虫引擎ENGINE。 </li>
+<li>6、爬虫引擎ENGINE将下载器DOWNLOADER的响应通过中间件MIDDLEWARES返回给爬虫SPIDERS进行处理。 </li>
+<li>7、爬虫SPIDERS处理响应，并通过中间件MIDDLEWARES返回处理后的items，以及新的请求给引擎。 </li>
+<li>8、引擎发送处理后的items到项目管道，然后把处理结果返回给调度器SCHEDULER，调度器计划处理下一个请求抓取。 </li>
+<li>9、重复该过程（继续步骤1），直到爬取完所有的url请求。</li>
+</ul>
+<p><strong>各个组件介绍</strong></p>
+<p><strong>爬虫引擎(ENGINE)</strong></p>
+<p>爬虫引擎负责控制各个组件之间的数据流，当某些操作触发事件后都是通过engine来处理。</p>
+<p><strong>调度器(SCHEDULER)</strong></p>
+<p>调度接收来engine的请求并将请求放入队列中，并通过事件返回给engine。</p>
+<p><strong>下载器(DOWNLOADER)</strong></p>
+<p>通过engine请求下载网络数据并将结果响应给engine。</p>
+<p><strong>Spider</strong></p>
+<p>Spider发出请求，并处理engine返回给它下载器响应数据，以items和规则内的数据请求(urls)返回给engine。</p>
+<p><strong>管道项目(item pipeline)</strong></p>
+<p>负责处理engine返回spider解析后的数据，并且将数据持久化，例如将数据存入数据库或者文件。</p>
+<p><strong>下载中间件</strong></p>
+<p>下载中间件是engine和下载器交互组件，以钩子(插件)的形式存在，可以代替接收请求、处理数据的下载以及将结果响应给engine。</p>
+<p><strong>spider中间件</strong></p>
+<p>spider中间件是engine和spider之间的交互组件，以钩子(插件)的形式存在，可以代替处理response以及返回给engine items及新的请求集。</p>
+
+          <br>
+<p>Y&#39;s Blog</p>
+<p><img src='/images/scribble3.png' alt='scribble'></p>
+
+        </section>
+      </div>
+      
+      <div class='block'>
+  
+    <a class='main' href='/'>Home</a>
+  
+    <a class='main' href='/about'>About</a>
+  
+    <a class='main' href='https://github.com/JunchuangYang'>Github</a>
+  
+</div>
+
+    </div>
+    <footer>
+  <span class='muted'>&copy; Junchuang Yang. All Rights Reserved.</span><br>
+  <a href='https://github.com/saintwinkle/hexo-theme-scribble' class='muted'>built with Hexo using Scribble theme</a>
+  <br>
+   <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <span id="busuanzi_container_site_pv">
+    本站访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  <br>
+  <img src='/images/scribble2.png' alt='scribble' />
+</footer>
+
+  </body>
+</html>
