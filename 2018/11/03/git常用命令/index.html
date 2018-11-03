@@ -1,0 +1,126 @@
+<html>
+  <head>
+    <title>git常用命令总结 - Y&#39;s Blog</title>
+    <link href='/images/fav.png' rel='shortcut icon'>
+<link href='/atom.xml' rel='alternate' type='application/rss+xml'>
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/highlight.css">
+<link rel="stylesheet" href="/css/responsive.css">
+<script src="/js/jquery.js"></script>
+<script src="/js/basics.js"></script>
+<meta content='width=device-width, initial-scale=1.0, user-scalable=no' name='viewport'>
+<meta content='text/html; charset=utf-8' http-equiv='content-type'>
+
+
+  </head>
+  <body>
+    <header>
+  <a id='go-back-home' href='/'><img src='/images/scribble.png' alt='Home' width='53' height='59'></a>
+  <p>Y&#39;s Blog</p>
+  <p>Salted fish without dreams</p>
+</header>
+
+    <div id='container'>
+      <div class='block'>
+  
+    <a class='main' href='/'>Home</a>
+  
+    <a class='main' href='/about'>About</a>
+  
+    <a class='main' href='https://github.com/JunchuangYang'>Github</a>
+  
+</div>
+
+      <section class='paging'>
+  
+  
+    <div class='right'>
+      <a href='/2018/11/02/2018-10_summarize/'>
+        ›
+      </a>
+    </div>
+  
+</section>
+
+      <div class='content'>
+        <section class='post'>
+          <h1>
+            <div class='date'>2018-11-03</div>
+            git常用命令总结
+          </h1>
+          <p>详细命令请参阅廖雪峰老师的博客：<a href="https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000" target="_blank" rel="noopener">git教程</a></p>
+<p><strong>git init </strong>: 在当前文件中,初始化一个Git仓库</p>
+<p><strong>git add <file> </file></strong>： 添加文件到git仓库暂存区</p>
+<p><strong>git commit -m <message></message></strong>： 添加暂存区的文件到git仓库的当前分支</p>
+<p><strong>git status </strong>: 查看仓库当前的状态</p>
+<p><strong>git diff </strong>： 查看修改内容</p>
+<p><strong>git log</strong>：可以查看提交历史，以便确定要回退到哪个版本</p>
+<p><strong>git reflog</strong>：查看命令历史，以便确定要回到未来的哪个版本。</p>
+<p><strong>git reset –hard commit_id </strong>:HEAD指向的版本就是当前版本，因此，Git允许我们在版本的历史之间穿梭</p>
+<p><strong>git diff HEAD – <file> </file></strong>:命令可以查看工作区和版本库里面最新版本的区别</p>
+<p><strong>git checkout – <file> </file></strong>: 可以丢弃工作区的修改。令中的–很重要，没有–，就变成了“切换到另一个分支”的命令</p>
+<p><strong>git reset HEAD <file> </file></strong>： 可以把暂存区的修改撤销掉（unstage），重新放回工作区</p>
+<p><strong>git rm <file> </file></strong> ： 从版本库中删除该文件</p>
+<p><strong>git remote add origin <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>:github_name/repo-name.git</strong> :把本地仓库的内容推送到GitHub仓库</p>
+<p><strong>git push -u origin master　</strong>：第一次推送master分支的所有内容</p>
+<p><strong>git push origin master </strong>: 此后，每次本地提交后，只要有必要，就可以使用该命令推送最新修改</p>
+<p><strong>git clone <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>:github_name/repo-name.git</strong> : 从远程克隆仓库</p>
+<p><strong>git branch </strong>: 查看分支</p>
+<p><strong>git branch <name></name></strong> :创建分支</p>
+<p><strong>git checkout <name></name></strong> :切换分支</p>
+<p><strong>git checkout -b <name></name></strong>：创建+切换分支</p>
+<p><strong>git merge <name></name></strong>：合并某分支到当前分支</p>
+<p><strong>git branch -d <name></name></strong>：删除分支</p>
+<p><strong>git log –graph</strong>：可以看到分支合并图。</p>
+<p><strong>git stash </strong>： 保存当前的工作现场去修复bug</p>
+<p><strong>git stash pop</strong>： 回到工作现场继续工作</p>
+<p><strong>git stash list</strong> :列出所有的当时保存的列表</p>
+<p><strong>git stash apply stash@{0}</strong> ： 你可以多次stash，恢复的时候，先用git stash list查看，然后恢复指定的stash</p>
+<p><strong>git branch -D <name> </name></strong>：丢弃一个没有被合并过的分支，强行删除</p>
+<p><strong>git remote </strong>:查看远程库的信息 </p>
+<p><strong>git remote -v</strong>:显示更详细的信息</p>
+<p><strong>git push origin master </strong>: 推送分支，就是把该分支上的所有本地提交推送到远程库。推送时，要指定本地分支，这样，Git就会把该分支推送到远程库对应的远程分支上：</p>
+<p><strong>git push origin dev</strong>:如果要推送其他分支，比如dev，</p>
+<p><strong>git branch –set-upstream-to=origin/<branch> dev</branch></strong>:本地分支和远程分支的链接关系创建</p>
+<p><strong>git checkout -b branch-name origin/branch-name </strong>：在本地创建和远程分支对应的分支</p>
+<p><strong>git tag <name></name></strong>：可以打一个新标签</p>
+<p><strong>git tag</strong>：查看所有标签</p>
+<p><strong>git show <tagname></tagname></strong>：查看标签信息</p>
+<p><strong>git tag -a <tagname> -m “blablabla…”</tagname></strong>：创建带有说明的标签，用-a指定标签名，-m指定说明文字</p>
+<p><strong>git push origin <tagname></tagname></strong>：可以推送一个本地标签</p>
+<p><strong>git push origin –tags</strong>:可以推送全部未推送过的本地标签</p>
+<p><strong>git tag -d <tagname></tagname></strong>:可以删除一个本地标签</p>
+<p><strong>git push origin :refs/tags/<tagname></tagname></strong> : 可以删除一个远程标签</p>
+
+          <br>
+<p>Y&#39;s Blog</p>
+<p><img src='/images/scribble3.png' alt='scribble'></p>
+
+        </section>
+      </div>
+      
+      <div class='block'>
+  
+    <a class='main' href='/'>Home</a>
+  
+    <a class='main' href='/about'>About</a>
+  
+    <a class='main' href='https://github.com/JunchuangYang'>Github</a>
+  
+</div>
+
+    </div>
+    <footer>
+  <span class='muted'>&copy; Junchuang Yang. All Rights Reserved.</span><br>
+  <a href='https://github.com/saintwinkle/hexo-theme-scribble' class='muted'>built with Hexo using Scribble theme</a>
+  <br>
+   <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <span id="busuanzi_container_site_pv">
+    本站访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  <br>
+  <img src='/images/scribble2.png' alt='scribble' />
+</footer>
+
+  </body>
+</html>
