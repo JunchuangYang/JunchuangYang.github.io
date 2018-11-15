@@ -48,32 +48,79 @@
             <div class='date'>2018-11-14</div>
             MySql数据库常用命令
           </h1>
-          <h3 id="MySql数据库操作命令"><a href="#MySql数据库操作命令" class="headerlink" title="MySql数据库操作命令:"></a>MySql数据库操作命令:</h3><p>链接数据库：    mysql -uroot -p<br>            mysql -uroot -pmysql<br>            mysql -u用户名 -p密码</p>
-<p>退出数据库：    exit/quit/ctrl+d</p>
-<p>显示版本：    select version();</p>
-<p>显示时间：    select now();</p>
-<p>查看所有数据库：    show databases;</p>
-<p>查看当前使用数据库：    select database();</p>
-<p>使用数据库：    use 数据库名;</p>
-<p>创建数据库：    create database 数据库名  charset=utf8;<br>            create database mysql; 默认编码latin<br>            create database mysql charset=utf8; 指定utf8编码</p>
-<p>查看数据库创建语句：    show create database 数据库名;</p>
-<p>删除数据库:    drop database 数据库名; </p>
-<p>查看当前数据库中的所有表：    show tables;</p>
-<p>创建表： auto_increment 表示自动增长<br>        not null 表示不能为空<br>        primary key 表示主键<br>        default 默认值<br>        create table 数据库名字（字段,类型,约束）</p>
-<p>查看表的结构： desc 数据库表名;</p>
-<p>创建学生表： create table students(<br>    id int unsigned not null auto_increment primary key,<br>    name varchar(30),<br>    age tinyint unsigned default 0,<br>    high decimal(5,2),<br>    gender enum(“男”,”女”,”保密”) default “保密”,<br>    cls_id int unsigned<br>)</p>
-<p>修改表–添加字段：    alter table 表名 add 字段名 字段类型;</p>
-<p>alter table students add birthday datetime;</p>
-<p>修改表–修改字段：不重命名版：    alter table 表名 modify 字段名 字段类型;</p>
-<p>alter table students modify birthday datetime;</p>
-<p>修改表–修改字段：重命名版：    alter table 表名 change 原字段名 新字段名 字段类型;</p>
-<p>alter table students change birthday birth date;</p>
-<p>修改表–删除字段：        alter table 表名 drop 列名;</p>
-<p>删除表：    drop table 表名;</p>
-<p>修改：    update 表名 set 列1=值1,列2=值2 … where 条件;</p>
-<p>删除：    物理删除： delete from 表名 where 条件;<br>        逻辑删除： 用一个字段表示这条信息是否已经不能再用</p>
-<p>– 数据的准备<br>    – 创建一个数据库<br>    create database python_test charset=utf8;</p>
-<pre><code>-- 使用一个数据库
+          <h3 id="MySql数据库操作命令"><a href="#MySql数据库操作命令" class="headerlink" title="MySql数据库操作命令:"></a>MySql数据库操作命令:</h3><pre><code>--
+链接数据库：    mysql -uroot -p
+        mysql -uroot -pmysql
+        mysql -u用户名 -p密码
+
+退出数据库：    exit/quit/ctrl+d
+
+显示版本：    select version();
+
+显示时间：    select now();
+
+查看所有数据库：    show databases;
+
+查看当前使用数据库：    select database();
+
+使用数据库：    use 数据库名;
+
+创建数据库：    create database 数据库名  charset=utf8;
+            create database mysql; 默认编码latin
+            create database mysql charset=utf8; 指定utf8编码
+
+查看数据库创建语句：    show create database 数据库名;
+
+删除数据库:    drop database 数据库名; 
+
+查看当前数据库中的所有表：    show tables;
+
+创建表： auto_increment 表示自动增长
+        not null 表示不能为空
+        primary key 表示主键
+        default 默认值
+        create table 数据库名字（字段,类型,约束）
+
+查看表的结构： desc 数据库表名;
+
+创建学生表： create table students(
+    id int unsigned not null auto_increment primary key,
+    name varchar(30),
+    age tinyint unsigned default 0,
+    high decimal(5,2),
+    gender enum(&quot;男&quot;,&quot;女&quot;,&quot;保密&quot;) default &quot;保密&quot;,
+    cls_id int unsigned
+)
+
+修改表--添加字段：    alter table 表名 add 字段名 字段类型;
+
+alter table students add birthday datetime;
+
+修改表--修改字段：不重命名版：    alter table 表名 modify 字段名 字段类型;
+
+alter table students modify birthday datetime;
+
+修改表--修改字段：重命名版：    alter table 表名 change 原字段名 新字段名 字段类型;
+
+alter table students change birthday birth date;
+
+修改表--删除字段：        alter table 表名 drop 列名;
+
+删除表：    drop table 表名;
+
+修改：    update 表名 set 列1=值1,列2=值2 ... where 条件;
+
+删除：    物理删除： delete from 表名 where 条件;
+        逻辑删除： 用一个字段表示这条信息是否已经不能再用
+
+
+
+
+-- 数据的准备
+-- 创建一个数据库
+create database python_test charset=utf8;
+
+-- 使用一个数据库
 use python_test;
 
 -- 显示使用的当前数据是哪个?
@@ -96,8 +143,17 @@ create table classes (
     id int unsigned auto_increment primary key not null,
     name varchar(30) not null
 );
-</code></pre><p>– 查询<br>    – 查询所有字段<br>    – select <em> from 表名;<br>    select </em> from students;<br>    select * from classes;<br>    select id, name from classes;</p>
-<pre><code>-- 查询指定字段
+
+
+
+-- 查询
+-- 查询所有字段
+-- select * from 表名;
+select * from students;
+select * from classes;
+select id, name from classes;
+
+-- 查询指定字段
 -- select 列1,列2,... from 表名;
 select name, age from students;
 
@@ -119,8 +175,17 @@ select s.name, s.age from students as s;
 -- 消除重复行
 -- distinct 字段
 select distinct gender from students;
-</code></pre><p>– 条件查询<br>    – 比较运算符<br>        – select …. from 表名 where …..<br>        – &gt;<br>        – 查询大于18岁的信息<br>        select * from students where age&gt;18;<br>        select id,name,gender from students where age&gt;18;</p>
-<pre><code>    -- &lt;
+
+
+-- 条件查询
+-- 比较运算符
+    -- select .... from 表名 where .....
+    -- &gt;
+    -- 查询大于18岁的信息
+    select * from students where age&gt;18;
+    select id,name,gender from students where age&gt;18;
+
+    -- &lt;
     -- 查询小于18岁的信息
     select * from students where age&lt;18;
 
@@ -226,8 +291,15 @@ select distinct gender from students;
 
     -- 判非空is not null
     select * from students where height is not null;
-</code></pre><p>– 排序<br>    – order by 字段<br>    – asc从小到大排列，即升序<br>    – desc从大到小排序，即降序</p>
-<pre><code>-- 查询年龄在18到34岁之间的男性，按照年龄从小到到排序
+
+
+
+-- 排序
+-- order by 字段
+-- asc从小到大排列，即升序
+-- desc从大到小排序，即降序
+
+-- 查询年龄在18到34岁之间的男性，按照年龄从小到到排序
 select * from students where (age between 18 and 34) and gender=1;
 select * from students where (age between 18 and 34) and gender=1 order by age;
 select * from students where (age between 18 and 34) and gender=1 order by age asc;
@@ -249,8 +321,19 @@ select * from students where (age between 18 and 34) and gender=2 order by heigh
 
 -- 按照年龄从小到大、身高从高到矮的排序
 select * from students order by age asc, height desc;
-</code></pre><p>– 聚合函数<br>    – 总数<br>    – count<br>    – 查询男性有多少人，女性有多少人<br>    select <em> from students where gender=1;<br>    select count(</em>) from students where gender=1;<br>    select count(<em>) as 男性人数 from students where gender=1;<br>    select count(</em>) as 女性人数 from students where gender=2;</p>
-<pre><code>-- 最大值
+
+
+-- 聚合函数
+-- 总数
+-- count
+-- 查询男性有多少人，女性有多少人
+select * from students where gender=1;
+select count(*) from students where gender=1;
+select count(*) as 男性人数 from students where gender=1;
+select count(*) as 女性人数 from students where gender=2;
+
+
+-- 最大值
 -- max
 -- 查询最大的年龄
 select age from students;
@@ -287,8 +370,10 @@ select round(sum(age)/count(*), 3) from students;
 -- 计算男性的平均身高 保留2位小数
 select round(avg(height), 2) from students where gender=1;
 -- select name, round(avg(height), 2) from students where gender=1;
-</code></pre><p>– 分组</p>
-<pre><code>-- group by
+
+-- 分组
+
+-- group by
 -- 按照性别分组,查询所有的性别
 select name from students group by gender;
 select * from students group by gender;
@@ -315,8 +400,13 @@ select gender, group_concat(name),avg(age) from students group by gender having 
 
 -- 查询每种性别中的人数多于2个的信息
 select gender, group_concat(name) from students group by gender having count(*)&gt;2;
-</code></pre><p>– 分页<br>    – limit start, count</p>
-<pre><code>-- 限制查询出来的数据个数
+
+
+
+-- 分页
+-- limit start, count
+
+-- 限制查询出来的数据个数
 select * from students where gender=1 limit 2;
 
 -- 查询前5个数据
@@ -344,8 +434,13 @@ select * from students limit 6,2; -- -----&gt; limit (第N页-1)*每个的个数
 select * from students order by age asc limit 10,2;
 
 select * from students where gender=2 order by height desc limit 0,2;
-</code></pre><p>– 连接查询<br>    – inner join … on</p>
-<pre><code>-- select ... from 表A inner join 表B;
+
+
+
+-- 连接查询
+-- inner join ... on
+
+-- select ... from 表A inner join 表B;
 select * from students inner join classes;
 
 -- 查询 有能够对应班级的学生以及班级信息
@@ -383,8 +478,11 @@ select * from students as s left join classes as c on s.cls_id=c.id where c.id i
 
 -- right join   on
 -- 将数据表名字互换位置，用left join完成
-</code></pre><p>– 自关联<br>    – 省级联动 url:<a href="http://demo.lanrenzhijia.com/2014/city0605/" target="_blank" rel="noopener">http://demo.lanrenzhijia.com/2014/city0605/</a></p>
-<pre><code>-- 查询所有省份
+
+-- 自关联
+-- 省级联动 url:http://demo.lanrenzhijia.com/2014/city0605/
+
+-- 查询所有省份
 select * from areas where pid is null;
 
 -- 查询出山东省有哪些市
@@ -394,8 +492,13 @@ select province.atitle, city.atitle from areas as province inner join areas as c
 -- 查询出青岛市有哪些县城
 select province.atitle, city.atitle from areas as province inner join areas as city on city.pid=province.aid having province.atitle=&quot;青岛市&quot;;
 select * from areas where pid=(select aid from areas where atitle=&quot;青岛市&quot;)
-</code></pre><p>– 子查询<br>    – 标量子查询<br>    – 查询出高于平均身高的信息</p>
-<pre><code>-- 查询最高的男生信息
+
+
+-- 子查询
+-- 标量子查询
+-- 查询出高于平均身高的信息
+
+-- 查询最高的男生信息
 select * from students where height = 188;
 select * from students where height = (select max(height) from students);
 
