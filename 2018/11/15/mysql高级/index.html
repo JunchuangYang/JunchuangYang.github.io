@@ -1,0 +1,207 @@
+<html>
+  <head>
+    <title>MySql高级 - Y&#39;s Blog</title>
+    <link href='/images/fav.png' rel='shortcut icon'>
+<link href='/atom.xml' rel='alternate' type='application/rss+xml'>
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/highlight.css">
+<link rel="stylesheet" href="/css/responsive.css">
+<script src="/js/jquery.js"></script>
+<script src="/js/basics.js"></script>
+<meta content='width=device-width, initial-scale=1.0, user-scalable=no' name='viewport'>
+<meta content='text/html; charset=utf-8' http-equiv='content-type'>
+
+
+  </head>
+  <body>
+    <header>
+  <a id='go-back-home' href='/'><img src='/images/scribble.png' alt='Home' width='53' height='59'></a>
+  <p>Y&#39;s Blog</p>
+  <p>Salted fish without dreams</p>
+</header>
+
+    <div id='container'>
+      <div class='block'>
+  
+    <a class='main' href='/'>Home</a>
+  
+    <a class='main' href='/about'>About</a>
+  
+    <a class='main' href='https://github.com/JunchuangYang'>Github</a>
+  
+</div>
+
+      <section class='paging'>
+  
+  
+    <div class='right'>
+      <a href='/2018/11/14/mysql常用命令/'>
+        ›
+      </a>
+    </div>
+  
+</section>
+
+      <div class='content'>
+        <section class='post'>
+          <h1>
+            <div class='date'>2018-11-15</div>
+            MySql高级
+          </h1>
+          <h2 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h2><h3 id="1-问题"><a href="#1-问题" class="headerlink" title="1.问题"></a>1.问题</h3><p>对于复杂的查询，往往是有多个数据表进行关联查询而得到，如果数据库因为需求等原因发生了改变，为了保证查询出来的数据与之前相同，则需要在多个地方进行修改，维护起来非常麻烦</p>
+<p><strong>解决办法：定义视图</strong></p>
+<h3 id="2-视图是什么？"><a href="#2-视图是什么？" class="headerlink" title="2.视图是什么？"></a>2.视图是什么？</h3><p><strong>通俗的讲，视图就是一条SELECT语句执行后返回的结果集。</strong>所以我们在创建视图的时候，主要的工作就落在创建这条SQL查询语句上。</p>
+<p><strong>视图是对若干张基本表的引用，一张虚表，查询语句执行的结果</strong>，不存储具体的数据（基本表数据发生了改变，视图也会跟着改变）；</p>
+<p>方便操作，特别是查询操作，减少复杂的SQL语句，增强可读性；</p>
+<h3 id="3-定义视图"><a href="#3-定义视图" class="headerlink" title="3.定义视图"></a>3.定义视图</h3><p>建议以v_开头</p>
+<p>create view 视图名称 as select 语句;</p>
+<h3 id="4-查看视图"><a href="#4-查看视图" class="headerlink" title="4.查看视图"></a>4.查看视图</h3><p>查看表会将所有的视图也列出来</p>
+<p>show tables;</p>
+<h3 id="5-使用视图"><a href="#5-使用视图" class="headerlink" title="5.使用视图"></a>5.使用视图</h3><p>视图的用途就是查询</p>
+<p>select * from v_视图名字;</p>
+<h3 id="6-删除视图"><a href="#6-删除视图" class="headerlink" title="6.删除视图"></a>6.删除视图</h3><p>drop view 视图名称;</p>
+<h3 id="7-视图的作用"><a href="#7-视图的作用" class="headerlink" title="7.视图的作用"></a>7.视图的作用</h3><ul>
+<li>提高了重用性，就像一个函数</li>
+<li>对数据库重构，却不影响函数的运行</li>
+<li>提高了安全性能，可以对不同的用户</li>
+<li>让数据更加清晰</li>
+</ul>
+<h2 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h2><h3 id="1-为什么要有事务？"><a href="#1-为什么要有事务？" class="headerlink" title="1.为什么要有事务？"></a>1.为什么要有事务？</h3><p>事务广泛的运用于订单系统，银行系统等多种场景</p>
+<p>例如：</p>
+<p>A用户和B用户是银行的储户，现在A要给B转账500元，那么需要做以下几件事：</p>
+<pre><code>1.检查A的账户余额&gt;500元；
+2.A 账户中扣除500元;
+3.B 账户中增加500元;
+</code></pre><p>正常的流程走下来，A账户扣了500，B账户加了500，皆大欢喜。</p>
+<p>那如果A账户扣了钱之后，系统出故障了呢？A白白损失了500，而B也没有收到本该属于他的500。</p>
+<p>以上的案例中，隐藏着一个前提条件：A扣钱和B加钱，要么同时成功，要么同时失败。事务的需求就在于此</p>
+<p><strong>所谓事务,它是一个操作序列，这些操作要么都执行，要么都不执行，它是一个不可分割的工作单位。</strong></p>
+<p>例如，银行转帐工作：从一个帐号扣款并使另一个帐号增款，这两个操作要么都执行，要么都不执行。所以，应该把他们看成一个事务。事务是数据库维护数据一致性的单位，在每个事务结束时，都能保持数据一致性。</p>
+<p><strong>事务四大特性(简称ACID)</strong></p>
+<ol>
+<li><ul>
+<li>原子性(Atomicity)</li>
+</ul>
+</li>
+<li><ul>
+<li>一致性(Consistency)</li>
+</ul>
+</li>
+<li><ul>
+<li>隔离性(Isolation)</li>
+</ul>
+</li>
+<li><ul>
+<li>持久性(Durability)</li>
+</ul>
+</li>
+</ol>
+<p>以下内容出自《高性能MySQL》第三版，了解事务的ACID及四种隔离级有助于我们更好的理解事务运作。</p>
+<p>下面举一个银行应用是解释事务必要性的一个经典例子。假如一个银行的数据库有两张表：支票表（checking）和储蓄表（savings）。现在要从用户Jane的支票账户转移200美元到她的储蓄账户，那么至少需要三个步骤：</p>
+<ol>
+<li>检查支票账户的余额高于或者等于200美元。</li>
+<li>从支票账户余额中减去200美元。</li>
+<li>在储蓄帐户余额中增加200美元。</li>
+</ol>
+<p><strong>上述三个步骤的操作必须打包在一个事务中，任何一个步骤失败，则必须回滚所有的步骤。</strong></p>
+<p>可以用START TRANSACTION语句开始一个事务，然后要么使用COMMIT提交将修改的数据持久保存，要么使用ROLLBACK撤销所有的修改。事务SQL的样本如下：</p>
+<ol>
+<li>start transaction;</li>
+<li>select balance from checking where customer_id = 10233276;</li>
+<li>update checking set balance = balance - 200.00 where customer_id = 10233276;</li>
+<li>update savings set balance = balance + 200.00 where customer_id = 10233276;</li>
+<li>commit;</li>
+</ol>
+<p>一个很好的事务处理系统，必须具备这些标准特性：</p>
+<p><strong>原子性（atomicity）</strong></p>
+<p>一个事务必须被视为一个不可分割的最小工作单元，整个事务中的所有操作要么全部提交成功，要么全部失败回滚，对于一个事务来说，不可能只执行其中的一部分操作，这就是事务的原子性</p>
+<p><strong>一致性（consistency）</strong></p>
+<p>数据库总是从一个一致性的状态转换到另一个一致性的状态。（在前面的例子中，一致性确保了，即使在执行第三、四条语句之间时系统崩溃，支票账户中也不会损失200美元，因为事务最终没有提交，所以事务中所做的修改也不会保存到数据库中。）</p>
+<p><strong>隔离性（isolation）</strong></p>
+<p>通常来说，一个事务所做的修改在最终提交以前，对其他事务是不可见的。（在前面的例子中，当执行完第三条语句、第四条语句还未开始时，此时有另外的一个账户汇总程序开始运行，则其看到支票帐户的余额并没有被减去200美元。）</p>
+<p><strong>持久性（durability）</strong></p>
+<p>一旦事务提交，则其所做的修改会永久保存到数据库。（此时即使系统崩溃，修改的数据也不会丢失。）</p>
+<p><strong>事务命令</strong></p>
+<p>表的引擎类型必须是<strong>innodb类型</strong>才可以使用事务，这是mysql表的默认引擎</p>
+<p>查看表的创建语句，可以看到engine=innodb</p>
+<p>– 选择数据库<br>use 数据库名;<br>– 查看创表语句<br>show create table 表名;  </p>
+<p><strong>开启事务，命令如下： </strong><br>    开启事务后执行修改命令，变更会维护到本地缓存中，而不维护到物理表中<br>begin;<br>或者<br>start transaction;  </p>
+<p><strong>提交事务，命令如下</strong><br>    将缓存中的数据变更维护到物理表中<br>commit;</p>
+<p><strong>回滚事务，命令如下：</strong><br>    放弃缓存中变更的数据<br>rollback;</p>
+<p>注意</p>
+<ol>
+<li>修改数据的命令会自动的触发事务，包括insert、update、delete</li>
+<li>而在SQL语句中有手动开启事务的原因是：可以进行多次数据的修改，如果成功一起成功，否则一起会滚到之前的数据</li>
+</ol>
+<h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><h3 id="1-思考"><a href="#1-思考" class="headerlink" title="1.思考"></a>1.思考</h3><p>在图书馆中是如何找到一本书的？</p>
+<p>一般的应用系统对比数据库的读写比例在10:1左右(即有10次查询操作时有1次写的操作)，</p>
+<p>而且插入操作和更新操作很少出现性能问题，</p>
+<p>遇到最多、最容易出问题还是一些复杂的查询操作，所以查询语句的优化显然是重中之重</p>
+<h3 id="2-解决办法"><a href="#2-解决办法" class="headerlink" title="2.解决办法"></a>2.解决办法</h3><p>当数据库中数据量很大时，查找数据会变得很慢</p>
+<p><strong>优化方案：索引</strong></p>
+<h3 id="4-索引目的"><a href="#4-索引目的" class="headerlink" title="4.索引目的"></a>4.索引目的</h3><p>索引的目的在于提高查询效率，可以类比字典，如果要查“mysql”这个单词，我们肯定需要定位到m字母，然后从下往下找到y字母，再找到剩下的sql。如果没有索引，那么你可能需要把所有单词看一遍才能找到你想要的，如果我想找到m开头的单词呢？或者ze开头的单词呢？是不是觉得如果没有索引，这个事情根本无法完成？</p>
+<h3 id="5-索引原理"><a href="#5-索引原理" class="headerlink" title="5.索引原理"></a>5.索引原理</h3><p>除了词典，生活中随处可见索引的例子，如火车站的车次表、图书的目录等。它们的原理都是一样的，通过不断的缩小想要获得数据的范围来筛选出最终想要的结果，同时把随机的事件变成顺序的事件，也就是我们总是通过同一种查找方式来锁定数据。</p>
+<p>数据库也是一样，但显然要复杂许多，因为不仅面临着等值查询，还有范围查询(&gt;、&lt;、between、in)、模糊查询(like)、并集查询(or)等等。数据库应该选择怎么样的方式来应对所有的问题呢？我们回想字典的例子，能不能把数据分成段，然后分段查询呢？最简单的如果1000条数据，1到100分成第一段，101到200分成第二段，201到300分成第三段……这样查第250条数据，只要找第三段就可以了，一下子去除了90%的无效数据。</p>
+<h3 id="6-索引的使用"><a href="#6-索引的使用" class="headerlink" title="6.索引的使用"></a>6.索引的使用</h3><p><strong>查看索引</strong></p>
+<p>show index from 表名;</p>
+<p><strong>创建索引</strong></p>
+<ul>
+<li>如果指定字段是字符串，需要指定长度，建议长度与定义字段时的长度一致</li>
+<li>字段类型如果不是字符串，可以不填写长度部分</li>
+</ul>
+<p>create index 索引名称 on 表名(字段名称(长度))</p>
+<p><strong>删除索引</strong></p>
+<p>drop index 索引名称 on 表名;</p>
+<h3 id="7-索引demo"><a href="#7-索引demo" class="headerlink" title="7.索引demo"></a>7.索引demo</h3><p><strong>7.1创建测试表testindex</strong></p>
+<p>create table test_index(title varchar(10));</p>
+<p><strong>7.2 使用python程序（ipython也可以）通过pymsql模块 向表中加入十万条数据</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pymysql <span class="keyword">import</span> connect</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="comment"># 创建Connection连接</span></span><br><span class="line">    conn = connect(host=<span class="string">'localhost'</span>,port=<span class="number">3306</span>,database=<span class="string">'jing_dong'</span>,user=<span class="string">'root'</span>,password=<span class="string">'mysql'</span>,charset=<span class="string">'utf8'</span>)</span><br><span class="line">    <span class="comment"># 获得Cursor对象</span></span><br><span class="line">    cursor = conn.cursor()</span><br><span class="line">    <span class="comment"># 插入10万次数据</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100000</span>):</span><br><span class="line">        cursor.execute(<span class="string">"insert into test_index values('ha-%d')"</span> % i)</span><br><span class="line">    <span class="comment"># 提交数据</span></span><br><span class="line">    conn.commit()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+<p><strong>7.3查询</strong></p>
+<p><strong>开启运行时间监测</strong></p>
+<p>set profiling=1</p>
+<p><strong>查找第一万条数据ha-9999</strong></p>
+<p>select * from test_index where title = ‘ha-9999’;</p>
+<p><strong>查看执行的时间</strong></p>
+<p>show profiles;</p>
+<p><strong>为表title_index的title列创建索引</strong></p>
+<p>create index title_index on test_index(title(10))</p>
+<p><strong>执行查询语句</strong></p>
+<p>select * from test_index where title=’ha-9999’;</p>
+<p><strong>再次查看执行时间</strong></p>
+<p>show profiles;</p>
+<p><strong>8.注意：</strong></p>
+<p>要注意的是，建立太多的索引将会影响更新和插入的速度，因为它需要同样更新每个索引文件。对于一个经常需要更新和插入的表格，就没有必要为一个很少使用的where字句单独建立索引了，对于比较小的表，排序的开销不会很大，也没有必要建立另外的索引。</p>
+<p>建立索引会占用磁盘空间</p>
+
+          <br>
+<p>Y&#39;s Blog</p>
+<p><img src='/images/scribble3.png' alt='scribble'></p>
+
+        </section>
+      </div>
+      
+      <div class='block'>
+  
+    <a class='main' href='/'>Home</a>
+  
+    <a class='main' href='/about'>About</a>
+  
+    <a class='main' href='https://github.com/JunchuangYang'>Github</a>
+  
+</div>
+
+    </div>
+    <footer>
+  <span class='muted'>&copy; Junchuang Yang. All Rights Reserved.</span><br>
+  <a href='https://github.com/saintwinkle/hexo-theme-scribble' class='muted'>built with Hexo using Scribble theme</a>
+  <br>
+   <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <span id="busuanzi_container_site_pv">
+    本站访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  <br>
+  <img src='/images/scribble2.png' alt='scribble' />
+</footer>
+
+  </body>
+</html>
