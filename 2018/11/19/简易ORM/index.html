@@ -1,0 +1,168 @@
+<html>
+  <head>
+    <title>简易ORM的编写 - Y&#39;s Blog</title>
+    <link href='/images/fav.png' rel='shortcut icon'>
+<link href='/atom.xml' rel='alternate' type='application/rss+xml'>
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/highlight.css">
+<link rel="stylesheet" href="/css/responsive.css">
+<script src="/js/jquery.js"></script>
+<script src="/js/basics.js"></script>
+<meta content='width=device-width, initial-scale=1.0, user-scalable=no' name='viewport'>
+<meta content='text/html; charset=utf-8' http-equiv='content-type'>
+
+
+  </head>
+  <body>
+    <header>
+  <a id='go-back-home' href='/'><img src='/images/scribble.png' alt='Home' width='53' height='59'></a>
+  <p>Y&#39;s Blog</p>
+  <p>Salted fish without dreams</p>
+</header>
+
+    <div id='container'>
+      <div class='block'>
+  
+    <a class='main' href='/'>Home</a>
+  
+    <a class='main' href='/about'>About</a>
+  
+    <a class='main' href='https://github.com/JunchuangYang'>Github</a>
+  
+</div>
+
+      <section class='paging'>
+  
+  
+    <div class='right'>
+      <a href='/2018/11/15/mysql高级/'>
+        ›
+      </a>
+    </div>
+  
+</section>
+
+      <div class='content'>
+        <section class='post'>
+          <h1>
+            <div class='date'>2018-11-19</div>
+            简易ORM的编写
+          </h1>
+          <p><strong>利用Python中的元类编写的简易版的ORM(Object Relational Mapping,对象关系框架)</strong></p>
+<p>此代码是跟着传智播客中的dongge写的，跟着视频学习也算对元类有了一个基本的理解</p>
+<p>也可以参见此篇博客 <a href="https://segmentfault.com/a/1190000011447445" target="_blank" rel="noopener">https://segmentfault.com/a/1190000011447445</a></p>
+<p>从 <strong>道生一，一生二，二生三，三生万物</strong> 开始揭开元类的面纱</p>
+<hr>
+<pre><code>---
+    #-*- coding:utf-8 -*-
+    __author__ = &apos;lenovo&apos;
+
+    class ModelMetalclass(type):
+        # name，bases，attrs可以这样理解
+        # name：我是谁，类的名字
+        # bases：我从哪里来，继承的父类
+        # attrs：我到哪里去，类自己本身包含的属性
+        def __new__(cls, name, bases, attrs):
+            mappings = dict()
+
+            #判断是否需要保存
+            for k,v in attrs.items():
+                # 判断是否是指定的StringField或InterField的实例对象
+                if isinstance(v, tuple):
+                    mappings[k] = v
+
+            # 由于attrs中的key和value已经存储在mappings中了
+            # 所以删除一些重复的属性
+            for k in mappings.keys():
+                attrs.pop(k)
+
+            # uid/name/email/password存储
+            # 保存属性和列的映射关系
+            attrs[&apos;__mappings__&apos;] = mappings
+            # 假设表名与类名一致
+            attrs[&apos;__table__&apos;] = name
+
+            # 返回创建的类对象
+            return type.__new__(cls,name,bases,attrs)
+
+
+    class User(metaclass=ModelMetalclass):
+        uid = (&apos;uid&apos;,&quot;int unsigned&quot;)
+        name = (&apos;username&apos;,&quot;varchar(30&quot;)
+        email = (&apos;email&apos; , &quot;varchar(30)&quot;)
+        password = (&apos;password&apos;,&quot;varchar(30)&quot;)
+        # 当指定元类之后，以上的属性将不再类中，而是在__mappings__属性指定的字典当中存储
+        # 以上User类中有：
+        # __mappings__={
+        #     &apos;uid&apos; : (&apos;uid&apos;,&quot;int unsigned&quot;),
+        #     &apos;name&apos; : (&apos;username&apos;,&quot;varchar(30&quot;),
+        #     &apos;email&apos; : (&apos;email&apos; , &quot;varchar(30)&quot;),
+        #     &apos;password&apos; : (&apos;password&apos;,&quot;varchar(30)&quot;)
+        # }
+        # __table__ =&quot;User&quot;
+
+        def __init__(self,**kwargs):
+            for name,value in kwargs.items():
+                #setattr(object, name, values)
+                # 给对象的属性赋值，若属性不存在，先创建再赋值。
+                setattr(self,name,value)
+
+        def save(self):
+            fields = []
+            args = []
+            for k,v in self.__mappings__.items():
+                fields.append(v[0])
+                #getattr() 函数用于返回一个对象属性值。
+                # 这时的属性值是调用User类时传入的
+                args.append(getattr(self,k,None))
+
+            args_temp = list()
+            for temp in args:
+                # 判断是否是数字类型，是数字类型时拼接字符串不用加&apos;&apos;
+                if isinstance(temp,int):
+                    args_temp.append(str(temp))
+                elif isinstance(temp,str):
+                    args_temp.append(&quot;&quot;&quot;&apos;%s&apos;&quot;&quot;&quot;%temp)
+
+            sql = &apos;inser into %s (%s) values (%s);&apos;%(self.__table__,&apos;,&apos;.join(fields),&apos;,&apos;.join(args_temp))
+
+            print(&apos;SQL:%s&apos;%sql)
+
+    user =User(uid=12345,name=&apos;LS&apos;,email=&apos;xxx@qq.com&apos;,password=&apos;pwd&apos;)
+    #print(user.__dict__)
+    user.save()
+
+---
+</code></pre>
+          <br>
+<p>Y&#39;s Blog</p>
+<p><img src='/images/scribble3.png' alt='scribble'></p>
+
+        </section>
+      </div>
+      
+      <div class='block'>
+  
+    <a class='main' href='/'>Home</a>
+  
+    <a class='main' href='/about'>About</a>
+  
+    <a class='main' href='https://github.com/JunchuangYang'>Github</a>
+  
+</div>
+
+    </div>
+    <footer>
+  <span class='muted'>&copy; Junchuang Yang. All Rights Reserved.</span><br>
+  <a href='https://github.com/saintwinkle/hexo-theme-scribble' class='muted'>built with Hexo using Scribble theme</a>
+  <br>
+   <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <span id="busuanzi_container_site_pv">
+    本站访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  <br>
+  <img src='/images/scribble2.png' alt='scribble' />
+</footer>
+
+  </body>
+</html>
