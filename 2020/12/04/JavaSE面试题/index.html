@@ -1,0 +1,626 @@
+<html>
+  <head>
+    <title>Java面试题1 - Y&#39;s Blog</title>
+    <link href='/images/fav.png' rel='shortcut icon'>
+<link href='/atom.xml' rel='alternate' type='application/rss+xml'>
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/highlight.css">
+<link rel="stylesheet" href="/css/responsive.css">
+<script src="/js/jquery.js"></script>
+<script src="/js/basics.js"></script>
+<meta content='width=device-width, initial-scale=1.0, user-scalable=no' name='viewport'>
+<meta content='text/html; charset=utf-8' http-equiv='content-type'>
+
+
+  </head>
+  <body>
+    <header>
+  <a id='go-back-home' href='/'><img src='/images/scribble.png' alt='Home' width='53' height='59'></a>
+  <p>Y&#39;s Blog</p>
+  <p>Salted fish without dreams</p>
+</header>
+
+    <div id='container'>
+      <div class='block'>
+  
+    <a class='main' href='/'>Home</a>
+  
+    <a class='main' href='/Notes'>Notes</a>
+  
+    <a class='main' href='/about'>About</a>
+  
+    <a class='main' href='https://github.com/JunchuangYang'>Github</a>
+  
+</div>
+
+      <section class='paging'>
+  
+  
+    <div class='right'>
+      <a href='/2020/12/02/2020-12_summarize/'>
+        ›
+      </a>
+    </div>
+  
+</section>
+
+      <div class='content'>
+        <section class='post'>
+          <h1>
+            <div class='date'>2020-12-04</div>
+            Java面试题1
+          </h1>
+          <h1 id="Java面试题1"><a href="#Java面试题1" class="headerlink" title="Java面试题1"></a>Java面试题1</h1><p>文章参考：<a href="https://blog.csdn.net/qq_42999092/article/details/109068522" target="_blank" rel="noopener">https://blog.csdn.net/qq_42999092/article/details/109068522</a></p>
+<h2 id="JavaSE"><a href="#JavaSE" class="headerlink" title="JavaSE"></a>JavaSE</h2><h3 id="1-自增变量"><a href="#1-自增变量" class="headerlink" title="1.自增变量"></a>1.自增变量</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">        *赋值=，最后计算</span></span><br><span class="line"><span class="comment">        *=右边的从左到右加载值依次压入操作数栈</span></span><br><span class="line"><span class="comment">        *实际先算哪个，看运算符的优先级</span></span><br><span class="line"><span class="comment">        *自增、自减操作都是直接修改变量的值，不经过操作数栈</span></span><br><span class="line"><span class="comment">        *最后的赋值之前，临时结果也存在操作数栈中</span></span><br><span class="line"><span class="comment">        *赋值赋的是操作数栈中的值</span></span><br><span class="line"><span class="comment">        * */</span></span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">        * 1.把i的值压入操作数栈。 操作数栈： i=1</span></span><br><span class="line"><span class="comment">        * 2.i变量自增1。局部变量表：i=2</span></span><br><span class="line"><span class="comment">        * 3.把操作数栈中的i=1 赋给 局部变量表中的 i。 i=1</span></span><br><span class="line"><span class="comment">        * */</span></span><br><span class="line">        i = i++;<span class="comment">// i=1</span></span><br><span class="line">        <span class="keyword">int</span> j = i++;<span class="comment">//j=1，i=2</span></span><br><span class="line">        <span class="keyword">int</span> k = i + ++i * i++;<span class="comment">//</span></span><br><span class="line">        System.out.println(<span class="string">"i="</span> + i);<span class="comment">//4</span></span><br><span class="line">        System.out.println(<span class="string">"j="</span> + j);<span class="comment">//1</span></span><br><span class="line">        System.out.println(<span class="string">"k="</span> + k);<span class="comment">//11</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-写一个Singleton示例"><a href="#2-写一个Singleton示例" class="headerlink" title="2.写一个Singleton示例"></a>2.写一个Singleton示例</h3><h4 id="什么是Singleton"><a href="#什么是Singleton" class="headerlink" title="什么是Singleton?"></a>什么是Singleton?</h4><p>Singleton:在Java中 即指单例设置模式，探视软件开发最常用的设置模式之一</p>
+<p>单：唯一</p>
+<p>例：实例</p>
+<p>单例设计模式，即某个类在整个系统中只能有一个实例对象可被获取和使用的代码模式</p>
+<p>例如：代表JVM运行环境的Runtime类</p>
+<h4 id="要点："><a href="#要点：" class="headerlink" title="要点："></a>要点：</h4><h5 id="一是某个类只能有一个实例"><a href="#一是某个类只能有一个实例" class="headerlink" title="一是某个类只能有一个实例"></a>一是某个类只能有一个实例</h5><p> 构造器私有化</p>
+<h5 id="二是他必须自行创建实例"><a href="#二是他必须自行创建实例" class="headerlink" title="二是他必须自行创建实例"></a>二是他必须自行创建实例</h5><p> 含有一个该类的静态变量来保存这个唯一的实例</p>
+<h5 id="三是它必须自行向整个系统提供这个实例"><a href="#三是它必须自行向整个系统提供这个实例" class="headerlink" title="三是它必须自行向整个系统提供这个实例"></a>三是它必须自行向整个系统提供这个实例</h5><p> 对外提供获取该类实例对象的方式</p>
+<ul>
+<li>直接暴露</li>
+<li>用静态变量的get方法获取</li>
+</ul>
+<p>####　几种常见形式</p>
+<p>饿汉式：直接创建对象，不存在线程安全问题</p>
+<blockquote>
+<p> 直接实例化饿汉式(简洁直观)</p>
+<p> 枚举式 (最简洁)</p>
+<p> 静态代码块饿汉式(适合复杂实例化)</p>
+</blockquote>
+<p>懒汉式;延迟创建对象</p>
+<blockquote>
+<p> 线程不安全(使用于单线程)</p>
+<p> 线程安全(使用于多线程)</p>
+<p> 静态内部类模式 (适用于多线程)</p>
+</blockquote>
+<h4 id="饿汉式"><a href="#饿汉式" class="headerlink" title="饿汉式"></a>饿汉式</h4><h5 id="直接实例化饿汉式-简洁直观"><a href="#直接实例化饿汉式-简洁直观" class="headerlink" title="直接实例化饿汉式(简洁直观)"></a>直接实例化饿汉式(简洁直观)</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton1</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 1、构造器私有化</span></span><br><span class="line"><span class="comment">     * 2、自行创建，并且用静态变量保存</span></span><br><span class="line"><span class="comment">     * 3、向外提供实例</span></span><br><span class="line"><span class="comment">     * 4、强调这是一个单例，我们可以用final修改</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton1</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Singleton1 INSTANCE = <span class="keyword">new</span> Singleton1();</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="枚举式-最简洁"><a href="#枚举式-最简洁" class="headerlink" title="枚举式 (最简洁)"></a>枚举式 (最简洁)</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span>  Singleton2 &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 枚举类型：表示该类型是有限的几个</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    INSTANCE</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="静态代码块饿汉式-适合复杂实例化"><a href="#静态代码块饿汉式-适合复杂实例化" class="headerlink" title="静态代码块饿汉式(适合复杂实例化)"></a>静态代码块饿汉式(适合复杂实例化)</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton3</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     *  静态代码块</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Singleton3 INSTANCE;</span><br><span class="line">    <span class="keyword">private</span> String info;</span><br><span class="line">	<span class="comment">// 类加载时创建实例对象</span></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            INSTANCE = <span class="keyword">new</span> Singleton3(<span class="string">"123"</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton3</span><span class="params">(String info)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.info = info;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="懒汉式"><a href="#懒汉式" class="headerlink" title="懒汉式"></a>懒汉式</h4><h5 id="线程不安全-使用于单线程"><a href="#线程不安全-使用于单线程" class="headerlink" title="线程不安全(使用于单线程)"></a>线程不安全(使用于单线程)</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton4</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 1、构造器私有化</span></span><br><span class="line"><span class="comment">     * 2、用一个静态变量保存这个唯一的实例</span></span><br><span class="line"><span class="comment">     * 3、提供一个静态方法，获取这个实例对象</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">static</span> Singleton4 instance;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton4</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton4 <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">                instance = <span class="keyword">new</span> Singleton4();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> instance;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="线程安全-使用于多线程"><a href="#线程安全-使用于多线程" class="headerlink" title="线程安全(使用于多线程)"></a>线程安全(使用于多线程)</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton5</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 1、构造器私有化</span></span><br><span class="line"><span class="comment">     * 2、用一个静态变量保存这个唯一的实例</span></span><br><span class="line"><span class="comment">     * 3、提供一个静态方法，获取这个实例对象</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">static</span> Singleton5 instance;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton5</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton5 <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (Singleton5.class) &#123;</span><br><span class="line">                <span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">                    instance = <span class="keyword">new</span> Singleton5();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> instance;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="静态内部类模式-适用于多线程"><a href="#静态内部类模式-适用于多线程" class="headerlink" title="静态内部类模式 (适用于多线程)"></a>静态内部类模式 (适用于多线程)</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton6</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 1、内部类被加载和初始化时，才创建INSTANCE实例对象</span></span><br><span class="line"><span class="comment">     * 2、静态内部类不会自动创建,随着外部类的加载初始化而初始化，他是要单独去加载和实例化的</span></span><br><span class="line"><span class="comment">     * 3、因为是在内部类加载和初始化时，创建的，因此线程安全</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton6</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Inner</span></span>&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Singleton6 INSTANCE = <span class="keyword">new</span> Singleton6();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton6 <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Inner.INSTANCE;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="3-Java中访问修饰符public、private、protected、以及default-默认不写-时的区别？？"><a href="#3-Java中访问修饰符public、private、protected、以及default-默认不写-时的区别？？" class="headerlink" title="3.Java中访问修饰符public、private、protected、以及default(默认不写) 时的区别？？"></a><strong>3.Java中访问修饰符public、private、protected、以及default(默认不写) 时的区别？？</strong></h3><p>Java有四种访问权限，其中三种有访问权限修饰符，分别为private，public和protected，还有一种不带任何修饰符：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">1、private，私有的，被private修饰的类、方法、属性、只能被本类的对象所访问。</span><br><span class="line"></span><br><span class="line">        我什么都不跟别人分享。只有自己知道。</span><br><span class="line"></span><br><span class="line">2、default，默认的，在这种模式下，只能在同一个包内访问。</span><br><span class="line"></span><br><span class="line">        我的东西可以和跟我一块住的那个人分享。</span><br><span class="line"></span><br><span class="line">3、protected，受保护的，被protected修饰的类、方法、属性、只能被本类、本包、不同包的子类所访问。</span><br><span class="line"></span><br><span class="line">        我的东西我可以和跟我一块住的那个人分享。另外也可以跟不在家的儿子分享消息，打电话</span><br><span class="line"></span><br><span class="line">4、public，公共的，被public修饰的类、方法、属性、可以跨类和跨包访问。</span><br><span class="line"></span><br><span class="line">        我的东西大家任何人都可以分享。</span><br></pre></td></tr></table></figure>
+<h3 id="4、类初始化实例初始化"><a href="#4、类初始化实例初始化" class="headerlink" title="4、类初始化实例初始化"></a>4、类初始化实例初始化</h3><h4 id="类初始化"><a href="#类初始化" class="headerlink" title="类初始化"></a>类初始化</h4><blockquote>
+<p>一个类要创建实例需要先加载并初始化该类</p>
+<p> main方法所在的类需要先加载和初始化</p>
+<p>一个子类要初始化需要先初始化父类</p>
+<p>一个类初始化就是执行 clinit 方法</p>
+<p> clinit 方法由<strong>静态类变量显示赋值代码和静态代码块组成</strong></p>
+<p> <strong>类变量显示赋值代码和静态代码块代码从上到下执行</strong></p>
+<p> clinit 方法只调用一次</p>
+</blockquote>
+<p>####　实例初始化过程</p>
+<blockquote>
+<p>实例初始化就是执行 init() 方法</p>
+<p> init () 方法可能重载有多个，有几个构造器就有几个 init() 方法</p>
+<p> init() 方法由非静态实例变量显示赋值代码和非静态代码块，对应构造器代码组成</p>
+<p> 非静态实例变量显示赋值代码和非静态代码块从上到下顺序执行，而对应构造器的代码最后执行</p>
+<p> 每次创建实例对象，调用对应构造器，执行的就是对应的 ini方法</p>
+<p> init 方法的首行是super()和super(实参列表) ,即对应父类的 init 方法</p>
+</blockquote>
+<h5 id="Father-java"><a href="#Father-java" class="headerlink" title="Father.java"></a>Father.java</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@program</span>: JavaSEInterView</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>: 类初始化和实例初始化测试</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>: YJC</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span>: 2020/12/03 11:08</span></span><br><span class="line"><span class="comment"> **/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 父类初始化&lt;clinit&gt;</span></span><br><span class="line"><span class="comment"> * 1、j = method()</span></span><br><span class="line"><span class="comment"> * 2、 父类的静态代码块</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 父类实例化方法:</span></span><br><span class="line"><span class="comment"> * 1、super()（最前）</span></span><br><span class="line"><span class="comment"> * 2、i = test() (9)</span></span><br><span class="line"><span class="comment"> * 3、子类的非静态代码块 (3)</span></span><br><span class="line"><span class="comment"> * 4、子类的无参构造（最后）(2)</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 非静态方法前面其实有一个默认的对象this</span></span><br><span class="line"><span class="comment"> * this在构造器或&lt;init&gt; 他表示的是正在创建的对象，因为咱们这里是正在创建Son对象，所以</span></span><br><span class="line"><span class="comment"> * test()执行的就是子类重写的代码(面向对象多态)</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 这里i=test() 执行的就是子类重写的test()方法</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 1.哪些方法不可以被重写</span></span><br><span class="line"><span class="comment"> * 		final方法</span></span><br><span class="line"><span class="comment"> *		静态方法</span></span><br><span class="line"><span class="comment"> *		private等子类中不可见的方法</span></span><br><span class="line"><span class="comment"> * 2.对象的多态性</span></span><br><span class="line"><span class="comment"> *		子类如果重写了父类的方法，通过子类的对象调用的一定是子类重写过的代码</span></span><br><span class="line"><span class="comment"> *		非静态方法默认的调用对象是this</span></span><br><span class="line"><span class="comment"> *		this对象在构造器或者说&lt;init&gt;方法中就是正在创建的对象</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Father</span> </span>&#123;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    *  * 非静态方法前面其实有一个默认的对象this</span></span><br><span class="line"><span class="comment">     * this在构造器或&lt;init&gt; 他表示的是正在创建的对象，因为咱们这里是正在创建Son对象，所以</span></span><br><span class="line"><span class="comment">     * test()执行的就是子类重写的代码(面向对象多态)</span></span><br><span class="line"><span class="comment">    * </span></span><br><span class="line"><span class="comment">    * */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> i = test();<span class="comment">//5 调用的是子类重写后的test()方法</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> j = method();<span class="comment">//1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"(1)"</span>);<span class="comment">//2</span></span><br><span class="line">    &#125;</span><br><span class="line">    Father() &#123;</span><br><span class="line">        System.out.println(<span class="string">"(2)"</span>);<span class="comment">//7</span></span><br><span class="line">    &#125;</span><br><span class="line">    &#123;</span><br><span class="line">        System.out.println(<span class="string">"(3)"</span>);<span class="comment">//6</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"(4)"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">method</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"(5)"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="Son-java"><a href="#Son-java" class="headerlink" title="Son.java"></a>Son.java</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@program</span>: JavaSEInterView</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>: 类初始化和实例初始化测试</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>: YJC</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span>: 2020/12/03 11:09</span></span><br><span class="line"><span class="comment"> **/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 子类的初始化&lt;clinit&gt;</span></span><br><span class="line"><span class="comment"> * 1、j = method()</span></span><br><span class="line"><span class="comment"> * 2、子类的静态代码块</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 先初始化父类 (5)(1)</span></span><br><span class="line"><span class="comment"> * 初始化子类 (10) (6)</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 子类实例化方法:</span></span><br><span class="line"><span class="comment"> * 1、super()（最前</span></span><br><span class="line"><span class="comment"> * 2、i = test() (9)</span></span><br><span class="line"><span class="comment"> * 3、子类的非静态代码块 (8)</span></span><br><span class="line"><span class="comment"> * 4、子类的无参构造（最后）(7)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Son</span> <span class="keyword">extends</span> <span class="title">Father</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> i = test();<span class="comment">//8</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> j = method();<span class="comment">//3</span></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">"(6)"</span>);<span class="comment">//4</span></span><br><span class="line">    &#125;</span><br><span class="line">    Son() &#123;</span><br><span class="line">        <span class="comment">//super(); //写或不写都是存在的，在子类的构造其中一定会调用父类的构造器</span></span><br><span class="line">        System.out.println(<span class="string">"(7)"</span>);<span class="comment">//10 构造参数是最后执行的</span></span><br><span class="line">    &#125;</span><br><span class="line">    &#123;</span><br><span class="line">        System.out.println(<span class="string">"(8)"</span>);<span class="comment">//9</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"(9)"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">method</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"(10)"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Son son = <span class="keyword">new</span> Son();</span><br><span class="line">        System.out.println();</span><br><span class="line">        Son son1 = <span class="keyword">new</span> Son();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行结果</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 类初始化，先父类后子类，静态属性和方法从上到下执行</span></span><br><span class="line">(<span class="number">5</span>)</span><br><span class="line">(<span class="number">1</span>)</span><br><span class="line">(<span class="number">10</span>)</span><br><span class="line">(<span class="number">6</span>)</span><br><span class="line"><span class="comment">// new了一个子类对象，执行一次实例初始化：先父类后子类，非静态属性和方法从上到下执行，构造函数最后执行</span></span><br><span class="line">(<span class="number">9</span>)</span><br><span class="line">(<span class="number">3</span>)</span><br><span class="line">(<span class="number">2</span>)</span><br><span class="line">(<span class="number">9</span>)</span><br><span class="line">(<span class="number">8</span>)</span><br><span class="line">(<span class="number">7</span>)</span><br><span class="line"><span class="comment">// 又new了一个子类对象，再执行一次实例初始化</span></span><br><span class="line">(<span class="number">9</span>)</span><br><span class="line">(<span class="number">3</span>)</span><br><span class="line">(<span class="number">2</span>)</span><br><span class="line">(<span class="number">9</span>)</span><br><span class="line">(<span class="number">8</span>)</span><br><span class="line">(<span class="number">7</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="5、方法参数传递机制"><a href="#5、方法参数传递机制" class="headerlink" title="5、方法参数传递机制"></a>5、方法参数传递机制</h3><p>代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.atguigu.methodParam;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Exam4</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line">        String str = <span class="string">"hello"</span>;</span><br><span class="line">        Integer num = <span class="number">200</span>;</span><br><span class="line">        <span class="keyword">int</span>[] arr = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;;</span><br><span class="line">        MyData my = <span class="keyword">new</span> MyData();</span><br><span class="line"></span><br><span class="line">        change(i,str,num,arr,my);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// arr my变了</span></span><br><span class="line">        System.out.println(<span class="string">"i= "</span> + i);</span><br><span class="line">        System.out.println(<span class="string">"str= "</span> + str);</span><br><span class="line">        System.out.println(<span class="string">"num= "</span> + num);</span><br><span class="line">        System.out.println(<span class="string">"arr= "</span> + Arrays.toString(arr));</span><br><span class="line">        System.out.println(<span class="string">"my.a= "</span> + my.a);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">change</span><span class="params">(<span class="keyword">int</span> j, String s, Integer n, <span class="keyword">int</span>[] a, MyData m)</span> </span>&#123;</span><br><span class="line">        j += <span class="number">1</span>;</span><br><span class="line">        s += <span class="string">"world"</span>;</span><br><span class="line">        n += <span class="number">1</span>;</span><br><span class="line">        a[<span class="number">0</span>] += <span class="number">1</span>;</span><br><span class="line">        m.a += <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyData</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="考点？"><a href="#考点？" class="headerlink" title="考点？"></a>考点？</h4><p>方法的参数传递机制</p>
+<p>String、包装类等对象的不可变性</p>
+<h4 id="方法的参数传递机制"><a href="#方法的参数传递机制" class="headerlink" title="方法的参数传递机制"></a>方法的参数传递机制</h4><p>1、形参是基本数据类型</p>
+<ul>
+<li>传递数据值</li>
+</ul>
+<p>2、实参是引用数据类型</p>
+<ul>
+<li><p>传递地址值</p>
+<p><strong>特殊的类型：String、包装类等对象的不可变性</strong></p>
+</li>
+</ul>
+<p>输出结果</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">i= <span class="number">1</span></span><br><span class="line">str= hello</span><br><span class="line">num= <span class="number">200</span></span><br><span class="line">arr= [<span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]</span><br><span class="line">my.a= <span class="number">11</span></span><br></pre></td></tr></table></figure>
+<h3 id="6、有n步台阶，一次只能上1步或2步，共有多少种走法？"><a href="#6、有n步台阶，一次只能上1步或2步，共有多少种走法？" class="headerlink" title="6、有n步台阶，一次只能上1步或2步，共有多少种走法？"></a>6、有n步台阶，一次只能上1步或2步，共有多少种走法？</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">n=1		-&gt;一步															f(1)=1</span><br><span class="line">n=2		-&gt;1.一步一步 2.直接两步												f(2)=2</span><br><span class="line">n=3		-&gt;1.先到达f(1),然后从f(2)跨一步 2.先到达f(2),然后从f(1)跨两步         f(3)=f(1)+f(2)</span><br><span class="line">n=4		-&gt;1.先到达f(2),然后从f(2)跨2步 2.先到达f(3),然后从f(3)跨1步          f(4)=f(3)+f(2)</span><br><span class="line">...</span><br><span class="line">n=x		-&gt;1.先到达f(x-2),然后从f(x-2)跨2步 2.先到达f(x-1),然后从f(x-1)跨1步          					f(x)=f(x-1)+f(x-2)</span><br></pre></td></tr></table></figure>
+<h3 id="7、成员变量和局部变量"><a href="#7、成员变量和局部变量" class="headerlink" title="7、成员变量和局部变量"></a>7、成员变量和局部变量</h3><h4 id="考点？-1"><a href="#考点？-1" class="headerlink" title="考点？"></a>考点？</h4><ul>
+<li>就近原则</li>
+<li>变量的分类</li>
+<li>成员变量： 类变量、实例变量</li>
+<li>局部变量</li>
+<li>非静态代码块的执行：每次创建实例对象都会执行</li>
+<li>方法的调用规则：调用一次执行一次</li>
+</ul>
+<h2 id="局部变量与成员变量区别"><a href="#局部变量与成员变量区别" class="headerlink" title="局部变量与成员变量区别:"></a>局部变量与成员变量区别:</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@program</span>: JavaSEInterView</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>: 成员变量和局部变量</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>: YJC</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span>: 2020/12/03 15:54</span></span><br><span class="line"><span class="comment"> **/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo2</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">int</span> s;<span class="comment">// 成员变量，类变量</span></span><br><span class="line">    <span class="keyword">int</span> i; <span class="comment">// 成员变量，实例变量</span></span><br><span class="line">    <span class="keyword">int</span> j;<span class="comment">// 成员变量，实例变量</span></span><br><span class="line">    <span class="comment">// 非静态代码块</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">1</span>; <span class="comment">// 非静态代码块中局部变量i</span></span><br><span class="line">        i++; <span class="comment">// 就近原则</span></span><br><span class="line">        j++;</span><br><span class="line">        s++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">(<span class="keyword">int</span> j)</span> </span>&#123;<span class="comment">//形参，局部变量，j</span></span><br><span class="line">        j++; <span class="comment">// 就近原则 17行的j</span></span><br><span class="line">        i++; <span class="comment">// 就近原则+作用域</span></span><br><span class="line">        s++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;<span class="comment">//形参，局部变量，args</span></span><br><span class="line">        Demo2 obj1 = <span class="keyword">new</span> Demo2();<span class="comment">//局部变量，obj1</span></span><br><span class="line">        Demo2 obj2 = <span class="keyword">new</span> Demo2();<span class="comment">//局部变量，obj2</span></span><br><span class="line">        obj1.test(<span class="number">10</span>);</span><br><span class="line">        obj1.test(<span class="number">20</span>);</span><br><span class="line">        obj2.test(<span class="number">30</span>);</span><br><span class="line">        <span class="comment">// 2 1 5</span></span><br><span class="line">        System.out.println(obj1.i + <span class="string">","</span> + obj1.j + <span class="string">","</span> + obj1.s);</span><br><span class="line">        <span class="comment">// 1 1 5</span></span><br><span class="line">        System.out.println(obj2.i + <span class="string">","</span> + obj2.j + <span class="string">","</span> + obj2.s);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="1、声明的位置"><a href="#1、声明的位置" class="headerlink" title="1、声明的位置"></a>1、声明的位置</h4><p> 局部变量：方法体{}中，形参，代码块{}中</p>
+<p> 成员变量：类方法外</p>
+<p> 类变量： 有static修饰</p>
+<p> 实例变量：没有static修饰</p>
+<h4 id="2、修饰符"><a href="#2、修饰符" class="headerlink" title="2、修饰符"></a>2、修饰符</h4><p> 局部变量：final</p>
+<p> 成员变量：public,protected,private,final ,static volatile,transient</p>
+<h4 id="3、值存储位置"><a href="#3、值存储位置" class="headerlink" title="3、值存储位置"></a>3、值存储位置</h4><ul>
+<li>局部变量：栈</li>
+<li>实例变量：堆</li>
+<li>类变量：方法区</li>
+</ul>
+<p><img src="https://gitee.com/junchuangyang/blog-img/raw/master/img/image-20201203160418798.png" alt="image-20201203160418798"></p>
+<p><strong>堆(Heap)</strong> ，此内存区域的唯一目的就是存放对象实例，几乎所有的对象实例都在这里分配内存。这一点在Java虚拟机规范中的描述是:所有的对象实例以及数组都要在堆上分配。</p>
+<p><strong>通常所说的栈(Stack)</strong> ，是指虚拟机栈。虚拟机栈用于存储局部变量表等。局部变量<br>表存放了编译期可知长度的各种基本数据类型(boolean、byte、 char、short、 int、 float、long、double) 、对象引用(reference 类型，它不等同于对象本身，是对象在堆内存的首地址)。方法执行完， 自动释放。</p>
+<p><strong>方法区(Method Area)</strong>用于存储已被虛拟机加载的类信息、常量、<del>静态变量</del>、即时编译器编译后的代码等数据。</p>
+<h4 id="4、作用域："><a href="#4、作用域：" class="headerlink" title="4、作用域："></a>4、作用域：</h4><p><strong>局部变量</strong>：从声明处开始，到所属的 } 好结束</p>
+<p><strong>实例变量</strong>：在当前类中 this 有时this. 可以省略,在其他类中 对象名. 访问</p>
+<p><strong>类变量</strong>：在当前类中 类名 有时类名. 可以省略，在其它类中类名.或对象名.访问</p>
+<h4 id="5、生命周期"><a href="#5、生命周期" class="headerlink" title="5、生命周期"></a>5、生命周期</h4><p><strong>局部变量</strong>：每一个线程，每一次调用执行都是新的生命周期</p>
+<p><strong>实例变量</strong>：随着对象的创建而初始化，随着对象的被回收而消亡，每一个对象的实例变量都是独立的</p>
+<p><strong>类变量</strong>：随着类的初始化而初始化，随着类的卸载而消亡，该类的所有对象的类变量是共享的</p>
+<p>当局部变量与XX变量重名时，如何区分：</p>
+<p>1、局部变量与实例变量重名</p>
+<ul>
+<li>在成员便令前面加 this</li>
+</ul>
+<p>2、局部变量与类变量重名</p>
+<ul>
+<li>在类变量前面加 类名</li>
+</ul>
+<h2 id="SSM"><a href="#SSM" class="headerlink" title="SSM"></a>SSM</h2><h3 id="1、Bean的作用域"><a href="#1、Bean的作用域" class="headerlink" title="1、Bean的作用域"></a>1、Bean的作用域</h3><p>在Spring中，可以在\<bean>元素的scope中属性里设置Bean的作用域，默认为singleton单实例的。</bean></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">singleton</td>
+<td>在SpringIOC容器中仅存在一个Bean实例，Bean以单实例的方式存在</td>
+</tr>
+<tr>
+<td style="text-align:left">prototype</td>
+<td>每次调用getBean()都会返回一个新的实例</td>
+</tr>
+<tr>
+<td style="text-align:left">request</td>
+<td>每次Http请求都会创建一个新的Bean，该作用域仅适用于WebApplicationContext环境</td>
+</tr>
+<tr>
+<td style="text-align:left">Session</td>
+<td>同一个HTTP Session共享一个Bean，不同的Http Session使用不同的Bean，该作用域仅适用于WebApplicationContext环境</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Spring中支持的常用数据库事务传播属性和事务隔离级别"><a href="#Spring中支持的常用数据库事务传播属性和事务隔离级别" class="headerlink" title="Spring中支持的常用数据库事务传播属性和事务隔离级别"></a>Spring中支持的常用数据库事务传播属性和事务隔离级别</h3><h4 id="1-事务的传播行为"><a href="#1-事务的传播行为" class="headerlink" title="1 事务的传播行为"></a>1 事务的传播行为</h4><h4 id="1-1-简介"><a href="#1-1-简介" class="headerlink" title="1.1 简介"></a>1.1 简介</h4><p>当事务方法被另一个事务方法调用时，必须指定事务应该如何传播，列如方法可能继续在现有事务中运行，也可能开启一个新事务，并在自己的事务中运行，事务传播的行为有传播属性指定，Spring定义了7中类传播行为</p>
+<table>
+<thead>
+<tr>
+<th>传播属性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>REQUIRED</strong>(默认)</td>
+<td>如果有事务在运行，当前的方法就在这个事务内运行，否则就启动一个新的事务，并在自己的事务内运行<br>（在一个事物内运行）</td>
+</tr>
+<tr>
+<td>REQUIRED_NEW</td>
+<td>当前方法必须启动事务，并在它自己的事务内运行，如果有事务正在运行，应该将他挂起<br>（开启新的事务）</td>
+</tr>
+<tr>
+<td>SUPPORTS</td>
+<td>如果有事务在运行，当前的方法就在这个事务内运行，否则他可以不运行在事务中</td>
+</tr>
+<tr>
+<td>NOT_SUPPORTE</td>
+<td>当前的方法不应该运行在事务中，如果有运行的事务，将他挂起</td>
+</tr>
+<tr>
+<td>MANDATORY</td>
+<td>当前的方法必须运行在事务内部，如果没有正在运行的事务，就抛出异常</td>
+</tr>
+<tr>
+<td>NEVER</td>
+<td>当前方法不应该运行在事务中，如果有运行的事务，就抛出异常</td>
+</tr>
+<tr>
+<td>NESTED</td>
+<td>如果有事务在运行，当前的方法就应该在这个事物的嵌套事务内运行，否则，就启动一个新的事务，并在它自己的事务内运行</td>
+</tr>
+</tbody>
+</table>
+<p>事务传播属性可以在@Transactional注解的propagation属性中定义</p>
+<h3 id="2-事务隔离级别"><a href="#2-事务隔离级别" class="headerlink" title="2 事务隔离级别"></a>2 事务隔离级别</h3><h4 id="2-1-数据库事务并发问题"><a href="#2-1-数据库事务并发问题" class="headerlink" title="2.1 数据库事务并发问题"></a>2.1 数据库事务并发问题</h4><p> 假设现在有两个事务：Transaction01和Transaction02并发执行。</p>
+<h5 id="1-脏读：当前事务读取到了其它事务更新还没有提交的值"><a href="#1-脏读：当前事务读取到了其它事务更新还没有提交的值" class="headerlink" title="1) 脏读：当前事务读取到了其它事务更新还没有提交的值"></a>1) 脏读：当前事务读取到了其它事务更新还没有提交的值</h5><p> ①Transaction01将某条记录的AGE值从20修改为30。</p>
+<p> ②Transaction02读取了Transaction01更新后的值：30。</p>
+<p> ③Transaction01回滚，AGE值恢复到了20。</p>
+<p> ④Transaction02读取到的30就是一个无效的值。</p>
+<h5 id="2-不可重复读：当前事务读两次读取到的值不一致"><a href="#2-不可重复读：当前事务读两次读取到的值不一致" class="headerlink" title="2) 不可重复读：当前事务读两次读取到的值不一致"></a>2) 不可重复读：当前事务读两次读取到的值不一致</h5><p> ①Transaction01读取了AGE值为20。</p>
+<p> ②Transaction02将AGE值修改为30。</p>
+<p> ③Transaction01再次读取AGE值为30，和第一次读取不一致。</p>
+<h5 id="3-幻读"><a href="#3-幻读" class="headerlink" title="3) 幻读"></a>3) 幻读</h5><p> ①Transaction01读取了STUDENT表中的一部分数据。</p>
+<p> ②Transaction02向STUDENT表中插入了新的行。</p>
+<p> ③Transaction01读取了STUDENT表时，多出了一些行。</p>
+<h4 id="2-2-隔离级别"><a href="#2-2-隔离级别" class="headerlink" title="2.2 隔离级别"></a>2.2 隔离级别</h4><p>数据库系统必须具有隔离并发运行各个事务的能力，使它们不会相互影响，避免各种并发问题。<strong>一个事务与其他事务隔离的程度称为隔离级别</strong>。SQL标准中规定了多种事务隔离级别，不同隔离级别对应不同的干扰程度，隔离级别越高，数据一致性就越好，但并发性越弱。</p>
+<ol>
+<li><strong>读未提交</strong>：READ UNCOMMITTED</li>
+</ol>
+<p>允许Transaction01读取Transaction02未提交的修改。</p>
+<ol>
+<li><p><strong>读已提交</strong>：READ COMMITTED</p>
+<p>要求Transaction01只能读取Transaction02已提交的修改。</p>
+</li>
+<li><p><strong>可重复读</strong>：REPEATABLE READ</p>
+<p>确保Transaction01可以多次从一个字段中读取到相同的值，即Transaction01执行期间禁止其它事务对这个字段进行更新。</p>
+</li>
+<li><p><strong>串行化</strong>：SERIALIZABLE</p>
+<p>确保Transaction01可以多次从一个表中读取到相同的行，在Transaction01执行期间，禁止其它事务对这个表进行添加、更新、删除操作。可以避免任何并发问题，但性能十分低下。</p>
+</li>
+<li><p><strong>各个隔离级别解决并发问题的能力见下表</strong></p>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>脏读</th>
+<th>不可重复读</th>
+<th>幻读</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>READ UNCOMMITTED</td>
+<td>有</td>
+<td>有</td>
+<td>有</td>
+</tr>
+<tr>
+<td>READ COMMITTED</td>
+<td>无</td>
+<td>有</td>
+<td>有</td>
+</tr>
+<tr>
+<td>REPEATABLE READ</td>
+<td>无</td>
+<td>有</td>
+<td>有</td>
+</tr>
+<tr>
+<td>SERIALIZABLE</td>
+<td>无</td>
+<td>无</td>
+<td>无</td>
+</tr>
+</tbody>
+</table>
+<p>各种数据库产品对事务隔离级别的支持程度：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Oracle</th>
+<th>MySql</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>READ UNCOMMITTED</td>
+<td>无</td>
+<td>有</td>
+</tr>
+<tr>
+<td>READ COMMITTED</td>
+<td>有（默认）</td>
+<td>有</td>
+</tr>
+<tr>
+<td>REPEATABLE READ</td>
+<td>无</td>
+<td>有（默认）</td>
+</tr>
+<tr>
+<td>SERIALIZABLE</td>
+<td>有</td>
+<td>有</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">//1.请简单介绍Spring支持的常用数据库事务传播属性和事务隔离级别？</span><br><span class="line"></span><br><span class="line">	/**</span><br><span class="line">	 * 事务的属性：</span><br><span class="line">	 * 	1.★propagation：用来设置事务的传播行为</span><br><span class="line">	 * 		事务的传播行为：一个方法运行在了一个开启了事务的方法中时，当前方法是使用原来的事务还是开启一个新的事务</span><br><span class="line">	 * 		-Propagation.REQUIRED：默认值，使用原来的事务</span><br><span class="line">	 * 		-Propagation.REQUIRES_NEW：将原来的事务挂起，开启一个新的事务</span><br><span class="line">	 * 	2.★isolation：用来设置事务的隔离级别</span><br><span class="line">	 * 		-Isolation.REPEATABLE_READ：可重复读，MySQL默认的隔离级别</span><br><span class="line">	 * 		-Isolation.READ_COMMITTED：读已提交，Oracle默认的隔离级别，开发时通常使用的隔离级别</span><br><span class="line">	 */</span><br></pre></td></tr></table></figure>
+<h3 id="SpringMVC如何解决乱码问题？"><a href="#SpringMVC如何解决乱码问题？" class="headerlink" title="SpringMVC如何解决乱码问题？"></a>SpringMVC如何解决乱码问题？</h3><p><a href="https://blog.csdn.net/lianjunzongsiling/article/details/77926370" target="_blank" rel="noopener">springmvc字符编码过滤器CharacterEncodingFilter浅析</a></p>
+<h4 id="一、在web-xml中的配置"><a href="#一、在web-xml中的配置" class="headerlink" title="一、在web.xml中的配置"></a><strong>一、在web.xml中的配置</strong></h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- characterEncodingFilter字符编码过滤器 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">filter</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>characterEncodingFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>org.springframework.web.filter.CharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">		<span class="comment">&lt;!--要使用的字符集，一般我们使用UTF-8(保险起见UTF-8最好)--&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">param-name</span>&gt;</span>encoding<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">param-value</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">		<span class="comment">&lt;!--是否强制设置request的编码为encoding，默认false，不建议更改--&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">param-name</span>&gt;</span>forceRequestEncoding<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">param-value</span>&gt;</span>false<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">		<span class="comment">&lt;!--是否强制设置response的编码为encoding，建议设置为true，下面有关于这个参数的解释--&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">param-name</span>&gt;</span>forceResponseEncoding<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">param-value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>characterEncodingFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">	<span class="comment">&lt;!--这里不能留空或者直接写 ' / ' ，否者不起作用--&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="二、CharacterEncodingFilter过滤器类浅析"><a href="#二、CharacterEncodingFilter过滤器类浅析" class="headerlink" title="二、CharacterEncodingFilter过滤器类浅析"></a><strong>二、CharacterEncodingFilter过滤器类浅析</strong></h4><p>打开该类源码，可以看到该类有三个类属性</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> String encoding; <span class="comment">//要使用的字符集，一般我们使用UTF-8(保险起见UTF-8最好)</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">boolean</span> forceRequestEncoding = <span class="keyword">false</span>; <span class="comment">//是否强制设置request的编码为encoding</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">boolean</span> forceResponseEncoding = <span class="keyword">false</span>; <span class="comment">//是否强制设置response的编码为encoding</span></span><br></pre></td></tr></table></figure>
+<p>主要方法只有一个，也就是下面这个，代码逻辑很简单，如注释所解释</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doFilterInternal</span><span class="params">(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">    String encoding = getEncoding();</span><br><span class="line">    <span class="keyword">if</span> (encoding != <span class="keyword">null</span>) &#123; <span class="comment">//如果设置了encoding的值，则根据情况设置request和response的编码</span></span><br><span class="line">     <span class="comment">//若设置request强制编码或request本身就没有设置编码</span></span><br><span class="line">     <span class="comment">//则设置编码为encoding表示的值</span></span><br><span class="line">        <span class="keyword">if</span> (isForceRequestEncoding() || request.getCharacterEncoding() == <span class="keyword">null</span>) &#123; </span><br><span class="line">            request.setCharacterEncoding(encoding);</span><br><span class="line">        &#125;</span><br><span class="line">     <span class="comment">//若设置response强制编码，则设置编码为encoding表示的值</span></span><br><span class="line">        <span class="keyword">if</span> (isForceResponseEncoding()) &#123; <span class="comment">//请注意这行代码，下面有额外提醒</span></span><br><span class="line">            response.setCharacterEncoding(encoding);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    filterChain.doFilter(request, response);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="额外提醒"><a href="#额外提醒" class="headerlink" title="额外提醒"></a>额外提醒</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (isForceResponseEncoding()) &#123; </span><br><span class="line">	response.setCharacterEncoding(encoding);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>是在</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">filterChain.doFilter(request, response);</span><br></pre></td></tr></table></figure>
+<p>之前执行的，这也就是说这段代码的作用是设置response的默认编码方式，在之后的代码里是可以根据需求设置为其他编码的，即这里设置的编码可能不是最终的编码，网上很多文档说这里设置的是最终的编码方式，这是错的。</p>
+<h3 id="SpringMVC工作流程"><a href="#SpringMVC工作流程" class="headerlink" title="SpringMVC工作流程"></a>SpringMVC工作流程</h3><h4 id="整体流程"><a href="#整体流程" class="headerlink" title="整体流程"></a>整体流程</h4><p>SpringMVC框架是一个基于请求驱动的Web框架，并且使用了‘前端控制器’模型来进行设计，再根据‘请求映射规则’分发给相应的页面控制器进行处理</p>
+<p><img src="https://gitee.com/junchuangyang/blog-img/raw/master/img/image-20201204093201811.png" alt="image-20201204093201811"></p>
+<p>文章参考：<a href="https://www.cnblogs.com/leskang/p/6101368.html" target="_blank" rel="noopener">https://www.cnblogs.com/leskang/p/6101368.html</a></p>
+<h4 id="1、整体流程"><a href="#1、整体流程" class="headerlink" title="1、整体流程"></a>1、整体流程</h4><p><img src="https://gitee.com/junchuangyang/blog-img/raw/master/img/791227-20161125140123503-1552603846.png" alt="img"></p>
+<p>具体步骤：</p>
+<p>1、 首先用户发送请求到前端控制器，前端控制器根据请求信息（如 URL）来决定选择哪一个页面控制器进行处理并把请求委托给它，即以前的控制器的控制逻辑部分；图中的 1、2 步骤；</p>
+<p>2、 页面控制器接收到请求后，进行功能处理，首先需要收集和绑定请求参数到一个对象，这个对象在 Spring Web MVC 中叫命令对象，并进行验证，然后将命令对象委托给业务对象进行处理；处理完毕后返回一个 ModelAndView（模型数据和逻辑视图名）；图中的 3、4、5 步骤；</p>
+<p>3、 前端控制器收回控制权，然后根据返回的逻辑视图名，选择相应的视图进行渲染，并把模型数据传入以便视图渲染；图中的步骤 6、7；</p>
+<p>4、 前端控制器再次收回控制权，将响应返回给用户，图中的步骤 8；至此整个结束。</p>
+<h4 id="2、核心流程"><a href="#2、核心流程" class="headerlink" title="2、核心流程"></a>2、核心流程</h4><p><img src="https://gitee.com/junchuangyang/blog-img/raw/master/img/791227-20161125140338768-995727439.png" alt="img"></p>
+<p>具体步骤：</p>
+<p>第一步：发起请求到前端控制器(DispatcherServlet)</p>
+<p>第二步：前端控制器请求HandlerMapping查找 Handler （可以根据xml配置、注解进行查找）</p>
+<p>第三步：处理器映射器HandlerMapping向前端控制器返回Handler，HandlerMapping会把请求映射为HandlerExecutionChain对象（包含一个Handler处理器（页面控制器）对象，多个HandlerInterceptor拦截器对象），通过这种策略模式，很容易添加新的映射策略</p>
+<p>第四步：前端控制器调用处理器适配器去执行Handler</p>
+<p>第五步：处理器适配器HandlerAdapter将会根据适配的结果去执行Handler</p>
+<p>第六步：Handler执行完成给适配器返回ModelAndView</p>
+<p>第七步：处理器适配器向前端控制器返回ModelAndView （ModelAndView是springmvc框架的一个底层对象，包括 Model和view）</p>
+<p>第八步：前端控制器请求视图解析器去进行视图解析 （根据逻辑视图名解析成真正的视图(jsp)），通过这种策略很容易更换其他视图技术，只需要更改视图解析器即可</p>
+<p>第九步：视图解析器向前端控制器返回View</p>
+<p>第十步：前端控制器进行视图渲染 （视图渲染将模型数据(在ModelAndView对象中)填充到request域）</p>
+<p>第十一步：前端控制器向用户响应结果</p>
+<h4 id="总结-核心开发步骤"><a href="#总结-核心开发步骤" class="headerlink" title="总结 核心开发步骤"></a><strong>总结 核心开发步骤</strong></h4><p>1、 DispatcherServlet 在 web.xml 中的部署描述，从而拦截请求到 Spring Web MVC</p>
+<p>2、 HandlerMapping 的配置，从而将请求映射到处理器</p>
+<p>3、 HandlerAdapter 的配置，从而支持多种类型的处理器</p>
+<p>注：处理器映射求和适配器使用纾解的话包含在了注解驱动中，不需要在单独配置</p>
+<p>4、 ViewResolver 的配置，从而将逻辑视图名解析为具体视图技术</p>
+<p>5、 处理器（页面控制器）的配置，从而进行功能处理 </p>
+<p>View是一个接口，实现类支持不同的View类型（jsp、freemarker、pdf…）</p>
+<h3 id="Mybatis中当实体类中的属性名和表中的字段不一样，怎么办？"><a href="#Mybatis中当实体类中的属性名和表中的字段不一样，怎么办？" class="headerlink" title="Mybatis中当实体类中的属性名和表中的字段不一样，怎么办？"></a>Mybatis中当实体类中的属性名和表中的字段不一样，怎么办？</h3><p>解决方案：</p>
+<p>1、写 SQL 语句的时候 写别名</p>
+<p>2、在MyBatis的全局配置文件中开启驼峰命名规则</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 开启驼峰命名规则，可以将数据库中下划线映射为驼峰命名</span></span><br><span class="line"><span class="comment">	列如 last_name 可以映射为 lastName</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">setting</span> <span class="attr">name</span>=<span class="string">"mapUnderscoreToCameLCase"</span> <span class="attr">value</span>=<span class="string">"true"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p>要求 数据库字段中含有下划线</p>
+<p>3、在Mapper映射文件中使用 resultMap 自定义映射</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- </span></span><br><span class="line"><span class="comment">	自定义映射</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">type</span>=<span class="string">"com.atguigu.pojo.Employee"</span> <span class="attr">id</span>=<span class="string">"myMap"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 映射主键 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">id</span> <span class="attr">cloumn</span>=<span class="string">"id"</span> <span class="attr">property</span>=<span class="string">"id"</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 映射其他列 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">"last_name"</span> <span class="attr">property</span>=<span class="string">"lastName"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">"email"</span> <span class="attr">property</span>=<span class="string">"email"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">"salary"</span> <span class="attr">property</span>=<span class="string">"salary"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">"dept_id"</span> <span class="attr">property</span>=<span class="string">"deptId"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="Java高级"><a href="#Java高级" class="headerlink" title="Java高级"></a>Java高级</h2><h4 id="git分支相关命令、实际引用"><a href="#git分支相关命令、实际引用" class="headerlink" title="git分支相关命令、实际引用"></a>git分支相关命令、实际引用</h4><h5 id="分支"><a href="#分支" class="headerlink" title="分支"></a>分支</h5><blockquote>
+<p>创建分支</p>
+</blockquote>
+<p>git branch &lt;分支名&gt;</p>
+<p>git branch -v 查看分支</p>
+<blockquote>
+<p>切换分支</p>
+</blockquote>
+<p>git checkout &lt;分支名&gt;</p>
+<p>一步完成: git checkout -b &lt;分支名&gt;</p>
+<blockquote>
+<p>合并分支</p>
+</blockquote>
+<p>先切换到主干 git checkout master</p>
+<p>git merge &lt;分支名&gt;</p>
+<blockquote>
+<p>删除分支</p>
+</blockquote>
+<p>先切换到主干 git checkout master</p>
+<p>git branch -D &lt;分支名&gt;</p>
+<h2 id="redis持久化有几种类型，他们的区别"><a href="#redis持久化有几种类型，他们的区别" class="headerlink" title="redis持久化有几种类型，他们的区别"></a>redis持久化有几种类型，他们的区别</h2><h4 id="Redis-提供了-2-个不同形式的持久化方式"><a href="#Redis-提供了-2-个不同形式的持久化方式" class="headerlink" title="Redis 提供了 2 个不同形式的持久化方式"></a>Redis 提供了 2 个不同形式的持久化方式</h4><p>RDB ( Redis DataBase)</p>
+<p>AOF (Append OF File)</p>
+<h3 id="RDB"><a href="#RDB" class="headerlink" title="RDB"></a>RDB</h3><p>在指定的时间间隔内将内存中的数据集快照写入磁盘，也就是行话讲的Snapshot快照，它恢复时是将快照文件直接读到内存里。</p>
+<blockquote>
+<p>备份是如何执行的</p>
+</blockquote>
+<p>Redis会单独创建(fork) 一个子进程来进行持款化，先将数据写入到一个临时文件中，待持久化过程都结束了,再用这个临时文件替换上次持久化好的文件。整个过程中，主进程是不进行任何I0操作的,这就确保了极高的性能如果需要进行大规模数据的恢复，对于数据恢复的完整性不是非常敏感，那RDB方式要比AOF方式更加的高效。RDB的缺点是最后一次持久化后的数据可能丢失。</p>
+<p>rdb 的保存文件</p>
+<p>在 redis.conf 中配置文件名称 默认为 dump.rdb</p>
+<p><img src="https://gitee.com/junchuangyang/blog-img/raw/master/img/20201014105538134.png" alt="在这里插入图片描述"><br>rbd 文件的保存路径，也可以修改，默认为 Redis启动命令行所在目录下</p>
+<p><img src="https://gitee.com/junchuangyang/blog-img/raw/master/img/20201014105538134.png" alt="在这里插入图片描述"></p>
+<blockquote>
+<p>rdb 的备份</p>
+</blockquote>
+<ul>
+<li>先通过 config get dir 查询 rdb文件的目录</li>
+<li>将 *.rdb 的文件拷贝到别的地方</li>
+</ul>
+<blockquote>
+<p>rdb 的恢复</p>
+</blockquote>
+<ul>
+<li>关闭 Redis</li>
+<li>先把备份文件拷贝到拷贝到工作目录下</li>
+<li>启动 Redis，备份数据会直接加载</li>
+</ul>
+<p><img src="https://gitee.com/junchuangyang/blog-img/raw/master/img/20201014105558306.png" alt="在这里插入图片描述"></p>
+<blockquote>
+<p>rdb 的优点</p>
+</blockquote>
+<ul>
+<li>节省磁盘空间</li>
+<li>恢复速度快</li>
+</ul>
+<blockquote>
+<p>rdb 的缺点</p>
+</blockquote>
+<ul>
+<li>虽然Redis在fork时使用了写时拷贝技术,但是如果数据庞大时还是比较消耗性能。</li>
+<li>在备份周期在一定间隔时间做一次备份, 所以如果Redis意外down掉的话，就会丢失最后一次快照后的所有修改。</li>
+</ul>
+<h3 id="AOF"><a href="#AOF" class="headerlink" title="AOF"></a>AOF</h3><p>以日志的形式来记录每个写操作，<strong>将Redis执行过的所有写指令记录下来(读操作不记录)</strong>，只许追加文件但不可以改写文件，Redis启动之初会读取该文件重新构建数据，换言之，Redis重启的话就根据日志文件的内容将写指令从前到后执行一次以完成数据的恢复工作。</p>
+<blockquote>
+<p>Rewrite</p>
+</blockquote>
+<p>AOF采文件追加方式，文件会越来越大为避免出现此种情况,新增了重写机制<strong>,当AOF文件的大小超过所设定的阈值时,Redis就会启动AOF文件的内容压缩</strong>，只保留可以恢复数据的最小指令集，可以使用命令bgrewriteaof.</p>
+<blockquote>
+<p>Redis 如何实现重写？</p>
+</blockquote>
+<p>AOF文件持续增长而过大时，会fork出一条新进程来将文件写(也是先写临时文件最后再rename)，遍历新进程的内存中数据，条记录有一条的Set语句。 写af文件的操作，并没有读取旧的aof文件，将整个内存中的数据库内容用命令的方式写了一个新的aof文件, 这点和快照有点类似。</p>
+<blockquote>
+<p>何时重写</p>
+</blockquote>
+<p>写虽然可以节约大量磁盘空间,减少恢复时间。但是每次重写还是有一定的负担的，因此设定Redis要满足一条件才会进行重写。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">auto- aof- rewrite- percentage 100</span><br><span class="line">auto- aof- rewrite-min-size 64mb</span><br></pre></td></tr></table></figure>
+<p>系统载入时或者上次重写完毕时, Redis会记录此时AOF大小,设为 base size ,如果Redis的AOF当前大小 &gt;= base size + base_ size* 100% (默认)且当前大小 &gt;=64mb (默认)的情况下， Redis会对AOF进行重写。</p>
+<blockquote>
+<p>AOF 的优点</p>
+</blockquote>
+<ul>
+<li>备份机制更稳健，丢失数据概率更低。</li>
+<li>可读的日志文本，通过操作AOF稳健，可以处理误操作。</li>
+</ul>
+<p><img src="https://gitee.com/junchuangyang/blog-img/raw/master/img/20201014105612781.png" alt="在这里插入图片描述"></p>
+<blockquote>
+<p>AOF的缺点</p>
+</blockquote>
+<ul>
+<li>比起RDB占用更多的磁盘空间。</li>
+<li>恢复备份速度要慢。</li>
+<li>每次读写都同步的话，有一定的性能压力。</li>
+<li>存在个别Bug，造成不能恢复。</li>
+</ul>
+<h2 id="Mysql什么时候建索引、什么时候不适合建索引"><a href="#Mysql什么时候建索引、什么时候不适合建索引" class="headerlink" title="Mysql什么时候建索引、什么时候不适合建索引"></a>Mysql什么时候建索引、什么时候不适合建索引</h2><p><img src="https://gitee.com/junchuangyang/blog-img/raw/master/img/image-20201204103411660.png" alt="image-20201204103411660"></p>
+<h3 id="哪些情况需要创建索引"><a href="#哪些情况需要创建索引" class="headerlink" title="哪些情况需要创建索引"></a>哪些情况需要创建索引</h3><p><img src="https://gitee.com/junchuangyang/blog-img/raw/master/img/image-20201204103647610.png" alt="image-20201204103647610"></p>
+<ol>
+<li>主键自动建立唯 一 索引</li>
+<li>频繁作为查询条件的字段应该创建索引</li>
+<li>查询中与其它表关联的字段，外键关系建立索引</li>
+<li>频繁更新的字段不适合创建索引，因为每次更新不单是更新了记录还会更新索引</li>
+<li>单键组索引的选择问题：在高并发下优先后创建组合索引</li>
+<li>查询中排序的字段，排序字段若通过索引法访问将大大提高排序速度</li>
+<li>查询中统计或者分组字段</li>
+</ol>
+<h3 id="哪些情况下不要建立索引"><a href="#哪些情况下不要建立索引" class="headerlink" title="哪些情况下不要建立索引"></a>哪些情况下不要建立索引</h3><p><img src="https://gitee.com/junchuangyang/blog-img/raw/master/img/image-20201204103659120.png" alt="image-20201204103659120"></p>
+<ol>
+<li>表记录太少<ol>
+<li>Why:提高了查询速度，同时却会降低更新表的速度，如对表进行INSERT、UPDATE和DELETE.</li>
+</ol>
+</li>
+<li>经常增删改的表<ol>
+<li>因为更新表时，MySQL不仅要保存数据，还要保存一下索引文件数据重复且分布平均的表字段，因此应该只为最经常查询和最经常排序的数据列建立索引。</li>
+</ol>
+</li>
+<li>注意，如果某个数据列包含许多重复的内容，为它建立索引就没有太大的实际效果。</li>
+</ol>
+<h2 id="JVM垃圾回收机制、GC发生在JVM哪部分，有几种GC，他们的算法是什么？"><a href="#JVM垃圾回收机制、GC发生在JVM哪部分，有几种GC，他们的算法是什么？" class="headerlink" title="JVM垃圾回收机制、GC发生在JVM哪部分，有几种GC，他们的算法是什么？"></a>JVM垃圾回收机制、GC发生在JVM哪部分，有几种GC，他们的算法是什么？</h2><p><img src="https://gitee.com/junchuangyang/blog-img/raw/master/img/image-20201204104953662.png" alt="image-20201204104953662"></p>
+<p>GC 发生在JVM的堆里面。</p>
+<p><img src="https://gitee.com/junchuangyang/blog-img/raw/master/img/image-20201204103950117.png" alt="image-20201204103950117"></p>
+<h4 id="引用计数法-淘汰"><a href="#引用计数法-淘汰" class="headerlink" title="引用计数法(淘汰)"></a>引用计数法(淘汰)</h4><p><img src="https://gitee.com/junchuangyang/blog-img/raw/master/img/image-20201204104033751.png" alt="image-20201204104033751"></p>
+<h4 id="复制算法-发生在年轻代"><a href="#复制算法-发生在年轻代" class="headerlink" title="复制算法(发生在年轻代)"></a>复制算法(发生在年轻代)</h4><p><img src="https://gitee.com/junchuangyang/blog-img/raw/master/img/image-20201204104139162.png" alt="image-20201204104139162"></p>
+<p>优点和缺点：</p>
+<p><img src="https://gitee.com/junchuangyang/blog-img/raw/master/img/image-20201204104253164.png" alt="image-20201204104253164"></p>
+<h4 id="标记清除（老年代）"><a href="#标记清除（老年代）" class="headerlink" title="标记清除（老年代）"></a>标记清除（老年代）</h4><p><img src="https://gitee.com/junchuangyang/blog-img/raw/master/img/image-20201204104344636.png" alt="image-20201204104344636"></p>
+<p>优缺点：</p>
+<p><img src="https://gitee.com/junchuangyang/blog-img/raw/master/img/image-20201204104545644.png" alt="image-20201204104545644"></p>
+<h4 id="标记压缩（老年代）"><a href="#标记压缩（老年代）" class="headerlink" title="标记压缩（老年代）"></a>标记压缩（老年代）</h4><p><img src="https://gitee.com/junchuangyang/blog-img/raw/master/img/image-20201204104713583.png" alt="image-20201204104713583"></p>
+<h4 id="标记清除压缩"><a href="#标记清除压缩" class="headerlink" title="标记清除压缩"></a>标记清除压缩</h4><p><img src="https://gitee.com/junchuangyang/blog-img/raw/master/img/image-20201204104845732.png" alt="image-20201204104845732"></p>
+<h2 id="redis-在项目中的使用场景"><a href="#redis-在项目中的使用场景" class="headerlink" title="redis 在项目中的使用场景"></a>redis 在项目中的使用场景</h2><table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>使用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>String</td>
+<td>比如说，我想知道什么时候封锁一个 IP 地址 Incrby 命令</td>
+</tr>
+<tr>
+<td>Hash</td>
+<td>存储用户信息[ id, name , age] <br>Hset( key ,field, value) <br>Hset( key ,id, 101)<br>Hset( key ,name, admin) <br>Hset( key ,age, 23)<br>修改案例——— <br>Hget(userKev,id) + Hset(userKey,id,102) <br>为什么不使用String类型来存储 ?<br>Set(userKey,用户信息字符串)<br>get(userKey)<br>String拿到对象值之后需要反序列化，我们只需要更改id <br>name, age 没有意义， 不建议使用String 类型。</td>
+</tr>
+<tr>
+<td>List</td>
+<td>实现最新消息的排行，还可以利用 List 的 push 命令，将任务存在list集合 中。同时使用另一个命令，将任务从集合中取出[ pop ]。<br> Redis - List 数据类型来模拟消息队列。<br>[电商中的秒杀就可以采用这种方式 来完成一个秒杀活动]。</td>
+</tr>
+<tr>
+<td>Set</td>
+<td>特殊之处:可以自动排重。<br>比如说微博中将每个人的好友存在集合(Set) 中， 这样求两个人的共通好友的操作。我们只需要求交集即可。</td>
+</tr>
+<tr>
+<td>Zset</td>
+<td>以某一个条件为权重，进行排序。<br>京东:商品详情的时候，都会有一个综合排名，还可以按照价格进行排名</td>
+</tr>
+</tbody>
+</table>
+<h2 id="单点登录"><a href="#单点登录" class="headerlink" title="单点登录"></a>单点登录</h2><p>单点登录: 一处登录多处使用！</p>
+<p>前提：<strong>单点登录多使用在分布式系统中</strong></p>
+<p>一处登录，处处运行</p>
+<p><img src="https://gitee.com/junchuangyang/blog-img/raw/master/img/20201014110632902.png" alt="在这里插入图片描述"></p>
+<p>京东：单点登录，是将 token 放入到 cookie 中</p>
+<p>案例：<strong>将浏览器的 cookie 禁用，则在登录京东则失效，无论如何登录不了</strong></p>
+<h2 id="购物车实现过程"><a href="#购物车实现过程" class="headerlink" title="购物车实现过程"></a>购物车实现过程</h2><p>购物车：</p>
+<p> <strong>1、购物车跟用户的关系 ？</strong></p>
+<p>​         a）一个用户必须对应一个购物车【一个用户不管买多少商品，都会存在属于自己的购物车中】</p>
+<p>​         b）单点登录一定要在购物车前</p>
+<p> <strong>2、跟购物车有关的操作有那些？</strong></p>
+<ol>
+<li><p>添加购物车</p>
+<ul>
+<li><p>用户未登录状态</p>
+<ul>
+<li>添加到什么地方，未登录将数据保存到什么地方？<ul>
+<li>redis？ —京东</li>
+<li>Cookie?  —Cookie 自己开发项目的时候【如果浏览器禁用Cookie】</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>用户登录状态</p>
+<ul>
+<li><p>Redis 缓存中 【读写速度快】:存储在Hash中</p>
+<p>Hash: Hset(key,field,value)</p>
+<ul>
+<li><p>Key: user:userId:cart</p>
+</li>
+<li><p>Hset(key,skuId,value)</p>
+</li>
+</ul>
+</li>
+<li><p>存在数据库中 【Oracle，mysql】</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>展示购物车</p>
+<ul>
+<li><p>未登录状态</p>
+<ul>
+<li>显示直接从 cookie 中 取得数据展示即可</li>
+</ul>
+</li>
+<li><p>登录状态</p>
+<ul>
+<li><p>用户一旦登录，必须显示数据库【redis】 + cookie 中的购物车的数据</p>
+<p> Cookie 中有三条记录+Redis 中有五条记录=真正展示的时候应该是八条记录</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+
+          <br>
+<p>Y&#39;s Blog</p>
+<p><img src='/images/scribble3.png' alt='scribble'></p>
+
+        </section>
+      </div>
+      
+      <div class='block'>
+  
+    <a class='main' href='/'>Home</a>
+  
+    <a class='main' href='/Notes'>Notes</a>
+  
+    <a class='main' href='/about'>About</a>
+  
+    <a class='main' href='https://github.com/JunchuangYang'>Github</a>
+  
+</div>
+
+    </div>
+    <footer>
+  <span class='muted'>&copy; Junchuang Yang. All Rights Reserved.</span><br>
+  <a href='https://github.com/saintwinkle/hexo-theme-scribble' class='muted'>built with Hexo using Scribble theme</a>
+  <br>
+   <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <span id="busuanzi_container_site_pv">
+    本站访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  <br>
+  <img src='/images/scribble2.png' alt='scribble' />
+</footer>
+
+  </body>
+</html>
